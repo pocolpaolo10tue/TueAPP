@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Maps"
+        android:icon="@drawable/ic_baseline_map_24"
+        android:id="@+id/map"/>
+    <item android:title="Book"
+        android:icon="@drawable/ic_baseline_book_online_24"
+        android:id="@+id/book"/>
+    <item android:title="Events"
+        android:icon="@drawable/ic_baseline_event_24"
+        android:id="@+id/events"/>
+    <item android:title="Settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:id="@+id/settings"/>
+</menu>
