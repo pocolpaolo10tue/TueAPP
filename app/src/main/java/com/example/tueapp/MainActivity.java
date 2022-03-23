@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.map) {
-                replaceFragment(SupportMapFragment.newInstance());
+                replaceFragment(mapFragment);
             }
             else if(item.getItemId() == R.id.book) {
                 replaceFragment(new BookFragment());
@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             new LatLng(51.4465266596796, 5.4991904032922445)
         );
 
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(tueBounds.getCenter(),
+                20));
         int width = getResources().getDisplayMetrics().widthPixels;
         int height = getResources().getDisplayMetrics().heightPixels;
 
