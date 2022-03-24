@@ -1,0 +1,26 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:key="edit_text_preference_1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Account" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="check_box_preference_1"
+        android:title="Dark Mode" />
+    <EditTextPreference
+        android:defaultValue="false"
+        android:key="check_box_preference_2"
+        android:title="Gps permission" />
+    <EditTextPreference
+        android:defaultValue="English"
+        android:key="check_box_preference_3"
+        android:title="Language"/>
+    <CheckBoxPreference
+        android:defaultValue="Default value"
+        android:key="edit_text_preference_4"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Notifications" />
+</PreferenceScreen>
