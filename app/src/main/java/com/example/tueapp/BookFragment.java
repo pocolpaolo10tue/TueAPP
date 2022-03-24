@@ -32,9 +32,10 @@ public class BookFragment extends Fragment {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setAllowFileAccess(true);
         webSettings.setAllowContentAccess(true);
+        webSettings.setDomStorageEnabled(true);
 
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("https://www.google.ro");
+        webView.loadUrl("https://fmis.tue.nl/case/tue/RES_001");
         return viewBook;
     }
 }
