@@ -12,7 +12,4 @@
     <item android:title="@string/settings"
         android:icon="@drawable/ic_baseline_settings_24"
         android:id="@+id/settings"/>
-    <item android:title="@string/account"
-        android:icon="@drawable/ic_baseline_account_circle_24"
-        android:id="@+id/account"/>
 </menu>
