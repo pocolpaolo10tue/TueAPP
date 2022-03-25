@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(new EventFragment());
             }
             else if (item.getItemId() == R.id.settings) {
-                replaceFragment(new SettingsFragment());
+                replaceFragment(new RegisterFragment());
             }
             return true;
         });

@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/20200605/StudioProjects/TueAPP/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/20200605/StudioProjects/TueAPP/app/src/main/res/layout/fragment_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/20200605/StudioProjects/TueAPP/app/src/main/res/layout/fragment_map.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/20200605/StudioProjects/TueAPP/app/src/main/res/layout/fragment_maps.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/20200605/StudioProjects/TueAPP/app/src/main/res/layout/fragment_register.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/20200605/StudioProjects/TueAPP/app/src/main/res/layout/fragment_settings.xml" value="0.2" />
         <entry key="..\:/Users/20201527/AndroidStudioProjects/TueAPP/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1885" />
         <entry key="..\:/Users/20201527/AndroidStudioProjects/TueAPP/app/src/main/res/drawable/ic_baseline_book_online_24.xml" value="0.1885" />
         <entry key="..\:/Users/20201527/AndroidStudioProjects/TueAPP/app/src/main/res/drawable/ic_baseline_map_24.xml" value="0.1885" />
