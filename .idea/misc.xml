@@ -3,12 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/20200605/StudioProjects/TueAPP/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/20200605/StudioProjects/TueAPP/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/20200605/StudioProjects/TueAPP/app/src/main/res/layout/fragment_account_info.xml" value="0.2536231884057971" />
+        <entry key="..\:/Users/20200605/StudioProjects/TueAPP/app/src/main/res/layout/fragment_accountinfo.xml" value="0.264" />
+        <entry key="..\:/Users/20200605/StudioProjects/TueAPP/app/src/main/res/layout/fragment_event.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/20200605/StudioProjects/TueAPP/app/src/main/res/layout/fragment_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/20200605/StudioProjects/TueAPP/app/src/main/res/layout/fragment_map.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/20200605/StudioProjects/TueAPP/app/src/main/res/layout/fragment_maps.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/20200605/StudioProjects/TueAPP/app/src/main/res/layout/fragment_register.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/20200605/StudioProjects/TueAPP/app/src/main/res/layout/fragment_settings.xml" value="0.2" />
+        <entry key="..\:/Users/20200605/StudioProjects/TueAPP/app/src/main/res/xml/root_preferences.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/20201527/AndroidStudioProjects/TueAPP/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1885" />
         <entry key="..\:/Users/20201527/AndroidStudioProjects/TueAPP/app/src/main/res/drawable/ic_baseline_book_online_24.xml" value="0.1885" />
         <entry key="..\:/Users/20201527/AndroidStudioProjects/TueAPP/app/src/main/res/drawable/ic_baseline_map_24.xml" value="0.1885" />
@@ -22,14 +26,9 @@
         <entry key="..\:/Users/20201527/AndroidStudioProjects/TueAPP/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2296875" />
         <entry key="..\:/Users/20202369/StudioProjects/TueAPP/app/src/main/res/layout/fragment_maps.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/lucas/AndroidStudioProjects/TueAPP/app/src/main/res/layout/activity_main.xml" value="0.31354166666666666" />
-        <entry key="..\:/Users/lucas/AndroidStudioProjects/TueAPP/app/src/main/res/layout/fragment_account.xml" value="0.31354166666666666" />
         <entry key="..\:/Users/lucas/AndroidStudioProjects/TueAPP/app/src/main/res/layout/fragment_book.xml" value="0.31354166666666666" />
-        <entry key="..\:/Users/lucas/AndroidStudioProjects/TueAPP/app/src/main/res/layout/fragment_event.xml" value="0.25" />
-        <entry key="..\:/Users/lucas/AndroidStudioProjects/TueAPP/app/src/main/res/layout/fragment_login.xml" value="0.23020833333333332" />
+        <entry key="..\:/Users/lucas/AndroidStudioProjects/TueAPP/app/src/main/res/layout/fragment_event.xml" value="0.31354166666666666" />
         <entry key="..\:/Users/lucas/AndroidStudioProjects/TueAPP/app/src/main/res/layout/fragment_map.xml" value="0.31354166666666666" />
-        <entry key="..\:/Users/lucas/AndroidStudioProjects/TueAPP/app/src/main/res/layout/invite_item.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/lucas/AndroidStudioProjects/TueAPP/app/src/main/res/menu/bottom_nav_menu.xml" value="0.23020833333333332" />
-        <entry key="..\:/Users/lucas/AndroidStudioProjects/TueAPP/app/src/main/res/xml/root_preferences.xml" value="0.31354166666666666" />
       </map>
     </option>
   </component>

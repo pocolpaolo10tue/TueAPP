@@ -9,16 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.tueapp.loginhandling.User;
 import com.example.tueapp.loginhandling.VerifyDetails;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.tueapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -35,6 +32,7 @@ public class LoginFragment extends Fragment {
     VerifyDetails verifier;
     FirebaseAuth mAuth;
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
@@ -49,6 +47,8 @@ public class LoginFragment extends Fragment {
         InputPassword = view.findViewById(R.id.password);
 
         mAuth = FirebaseAuth.getInstance();
+
+        verifier = new VerifyDetails();
 
         LoginButton.setOnClickListener(item ->{
             Login();
@@ -84,7 +84,7 @@ public class LoginFragment extends Fragment {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getActivity(),
                                         "User Logged in", Toast.LENGTH_SHORT).show();
-                                // TODO: Go back to mainactivity
+                                account_info();
                             } else {
                                 Toast.makeText(getActivity(), "Error: " +
                                         task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -96,6 +96,14 @@ public class LoginFragment extends Fragment {
 
     private void Register() {
         Fragment newFragment = new RegisterFragment() ;
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    private void account_info() {
+        Fragment newFragment = new LoginInfoFragment() ;
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, newFragment);
         transaction.addToBackStack(null);
