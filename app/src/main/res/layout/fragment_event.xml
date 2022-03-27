@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -35,19 +36,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/accepted_events"
+            app:layout_constraintBottom_toTopOf="@+id/acceptedEventsView"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/invitedEventsView"
-            app:layout_constraintBottom_toTopOf="@+id/acceptedEventsView"/>
+            app:layout_constraintTop_toBottomOf="@+id/invitedEventsView" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/acceptedEventsView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:contentDescription="@string/accepted_events"
+            android:src="@drawable/ic_baseline_plus_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/acceptedEventsView"
+            app:layout_constraintTop_toTopOf="@+id/acceptedEventsView"
+            android:focusable="true" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

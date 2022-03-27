@@ -1,6 +1,7 @@
 package com.example.tueapp;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 
 public class Event {
     //string to store event name
@@ -13,10 +14,10 @@ public class Event {
     private String description;
     //string to store the short description of the event
     private String shortDescription;
-    //string to store the invited email addresses
-    private String email;
+    //Hashset to store the invited email addresses
+    private HashSet<String> email;
     //string to store the accepted invites
-    private String accepted;
+    private HashSet<String> accepted;
     //boolean to send notification
     private boolean notify;
 
@@ -25,7 +26,7 @@ public class Event {
     }
 
     public Event(String eventName, String location, LocalDateTime time, String description,
-                 String shortDescription, String email, String accepted, boolean notify) {
+                 String shortDescription, HashSet email, HashSet accepted, boolean notify) {
         this.eventName = eventName;
         this.location = location;
         this.time = time;
@@ -78,18 +79,22 @@ public class Event {
     }
 
     public void addEmail(String email) {
-        this.email = this.email + email;
+        this.email.add(email);
     }
 
     public void removeEmail(String email) {
-        this.email = this.email.replace(email, "");
+        this.email.remove(email);
+    }
+
+    public HashSet getEmail() {
+        return email;
     }
 
     public void addAccepted(String email) {
-        this.email = this.email + email;
+        this.email.add(email);
     }
 
     public void removeAccepted(String email) {
-        this.email = this.email.replace(email, "");
+        this.email.remove(email);
     }
 }
