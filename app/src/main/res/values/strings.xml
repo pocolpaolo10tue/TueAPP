@@ -53,4 +53,10 @@
     <string name="supporting_text">Long description event</string>
     <string name="action_1">Accept event</string>
     <string name="action_2">deny event</string>
+    <string name="eventName">Event name</string>
+    <string name="Location">Location</string>
+    <string name="dateTime">Date and time</string>
+    <string name="shortDesc">Short description</string>
+    <string name="longDesc">Long description</string>
+    <string name="invited">Invited emails</string>
 </resources>
