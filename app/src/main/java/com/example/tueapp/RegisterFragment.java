@@ -1,6 +1,5 @@
 package com.example.tueapp;
 
-import com.example.tueapp.loginhandling.User;
 import com.example.tueapp.loginhandling.VerifyDetails;
 
 import android.os.Bundle;
@@ -21,7 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterFragment extends Fragment {
@@ -34,9 +33,9 @@ public class RegisterFragment extends Fragment {
     Button LoginButton;
     Button RegisterButton;
     VerifyDetails verifier;
-    User user;
     FirebaseAuth mAuth;
     FirebaseDatabase database;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -55,7 +54,8 @@ public class RegisterFragment extends Fragment {
         LoginButton = view.findViewById(R.id.login);
         RegisterButton = view.findViewById(R.id.register);
 
-        database = FirebaseDatabase.getInstance();
+        database = FirebaseDatabase.getInstance
+                ("https://project2-bb61c-default-rtdb.europe-west1.firebasedatabase.app");
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -101,7 +101,6 @@ public class RegisterFragment extends Fragment {
             InputLastName.setError(verifier.whyNameNotValid(last_name));
             InputLastName.requestFocus();
         } else {
-            user = new User(last_name, first_name, email, password);
             mAuth.createUserWithEmailAndPassword(email, password).
                     addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -109,9 +108,12 @@ public class RegisterFragment extends Fragment {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getActivity(),
                                         "Account Created", Toast.LENGTH_SHORT).show();
-                                DatabaseReference myRef =
-                                        database.getReference(mAuth.getCurrentUser().getEmail());
-                                myRef.setValue(user);
+                                UserProfileChangeRequest profileUpdates = new
+                                        UserProfileChangeRequest.Builder()
+                                        .setDisplayName(first_name + " " + last_name)
+                                        .build();
+                                mAuth.getCurrentUser().updateProfile(profileUpdates);
+
                                 Login();
                             } else {
                                 Toast.makeText(getActivity(), "Error: " + task.getException()
