@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -157,58 +158,22 @@ public class MapFragment extends Fragment {
                 if (fineLocationGranted != null && fineLocationGranted) {
                             // Precise location access granted.
                             locationPermissionGranted = true;
+                            FragmentTransaction tr = getFragmentManager().beginTransaction();
+                            tr.replace(R.id.map, MapFragment.class, null);
+                            tr.commit();
                         } else if (coarseLocationGranted != null && coarseLocationGranted) {
                             // Only approximate location access granted.
                             locationPermissionGranted = true;
+                            FragmentTransaction tr = getFragmentManager().beginTransaction();
+                            tr.replace(R.id.map, MapFragment.class, null);
+                            tr.commit();
+                            Toast.makeText(getActivity(), "Granted", Toast.LENGTH_SHORT).show();
                         } else {
                             // No location access granted.
                         }
                     }
             );
 
-    /**
-     * Handles the result of the request for location permissions.
-     */
-    /*
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        locationPermissionGranted = false;
-        if (requestCode
-                == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {// If request is cancelled, the result arrays are empty.
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                locationPermissionGranted = true;
-            }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-        //updateLocationUI();
-    }
 
-
-    /**
-     * Updates the map's UI settings based on whether the user has granted location permission.
-     */
-    /*
-    private void updateLocationUI() {
-        if (map == null) {
-            return;
-        }
-        try {
-            if (locationPermissionGranted) {
-                map.setMyLocationEnabled(true);
-                map.getUiSettings().setMyLocationButtonEnabled(true);
-            } else {
-                map.setMyLocationEnabled(false);
-                map.getUiSettings().setMyLocationButtonEnabled(false);
-                lastKnownLocation = null;
-                getLocationPermission();
-            }
-        } catch (SecurityException e)  {
-            Log.e("Exception: %s", e.getMessage());
-        }
-    }*/
 
 }
