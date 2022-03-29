@@ -92,11 +92,7 @@ public class EventFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Event event = dataSnapshot.getValue(Event.class);
-                    if (event.getAccepted().contains(mAuth.getCurrentUser().getEmail())) {
-                        list_accepted.add(event);
-                    } else {
                         list.add(event);
-                    }
                 }
                 adapterRecyclerview.notifyDataSetChanged();
             }
