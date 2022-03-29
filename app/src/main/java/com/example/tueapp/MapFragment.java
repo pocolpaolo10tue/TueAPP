@@ -209,13 +209,13 @@ public class MapFragment extends Fragment {
                 if (fineLocationGranted != null && fineLocationGranted) {
                             // Precise location access granted.
                             locationPermissionGranted = true;
-                            FragmentTransaction tr = getFragmentManager().beginTransaction();
+                            FragmentTransaction tr = getParentFragmentManager().beginTransaction();
                             tr.replace(R.id.map, MapFragment.class, null);
                             tr.commit();
                         } else if (coarseLocationGranted != null && coarseLocationGranted) {
                             // Only approximate location access granted.
                             locationPermissionGranted = true;
-                            FragmentTransaction tr = getFragmentManager().beginTransaction();
+                            FragmentTransaction tr = getParentFragmentManager().beginTransaction();
                             tr.replace(R.id.map, MapFragment.class, null);
                             tr.commit();
                             Toast.makeText(getActivity(), "Granted", Toast.LENGTH_SHORT).show();

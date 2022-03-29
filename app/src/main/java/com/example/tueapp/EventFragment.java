@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -60,9 +61,10 @@ public class EventFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.frame_layout, new CreateEvent(), null)
-                        .addToBackStack(null);
+                FragmentTransaction replace = getParentFragmentManager().beginTransaction();
+                replace.replace(R.id.frame_layout, new CreateEvent());
+                replace.addToBackStack(null);
+                replace.commit();
             }
         });
 

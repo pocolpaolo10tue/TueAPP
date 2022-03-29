@@ -12,6 +12,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Event creation"
+            android:padding="32dp"
+            android:gravity="center"
+            android:textAppearance="?attr/textAppearanceHeadline4" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textField"
             app:startIconContentDescription="@string/eventName"
@@ -19,12 +28,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/eventName"
-            app:endIconMode="clear_text">
+            app:endIconMode="clear_text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:padding="8dp"
+            app:helperText="*required">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="#616161" />
+                android:textColorHint="#616161"
+                android:inputType="textCapSentences|textAutoCorrect"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -35,7 +48,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/Location"
-            app:endIconMode="clear_text">
+            app:endIconMode="clear_text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:padding="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -51,9 +66,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/dateTime"
-            app:endIconMode="clear_text">
+            app:endIconMode="clear_text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:padding="8dp"
+            app:helperText="*required">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/timeField2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="date"
@@ -68,7 +87,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/shortDesc"
-            app:endIconMode="clear_text">
+            app:endIconMode="clear_text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:padding="8dp"
+            app:helperText="*required"
+            app:counterEnabled="true"
+            app:counterMaxLength="20">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -84,7 +108,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/longDesc"
-            app:endIconMode="clear_text">
+            app:endIconMode="clear_text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:padding="8dp"
+            android:inputType="textMultiLine">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -100,14 +127,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/invited"
-            app:endIconMode="clear_text">
+            app:endIconMode="clear_text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:padding="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/Submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:insetLeft="8dp"
+            android:insetTop="16dp"
+            android:insetRight="8dp"
+            android:padding="16dp"
+            android:text="Submit" />
 
     </LinearLayout>
 
