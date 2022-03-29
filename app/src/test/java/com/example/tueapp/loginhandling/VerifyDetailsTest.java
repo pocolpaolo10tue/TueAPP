@@ -8,38 +8,74 @@ public class VerifyDetailsTest {
     VerifyDetails verifier = new VerifyDetails();
 
     @Test
-    public void validEmailTests() {
+    public void validEmailTest1() {
         String test_email1 = "test@tue.nl";
-        String test_email2 = "test@student.tue.nl";
-        String test_email3 = "t@tue.nl";
-        String test_email4 = "t@student.tue.nl";
         assertEquals(true, verifier.isValidEmail(test_email1));
+    }
+
+    @Test
+    public void validEmailTests2() {
+        String test_email2 = "test@student.tue.nl";
         assertEquals(true, verifier.isValidEmail(test_email2));
+    }
+
+    @Test
+    public void validEmailTests3() {
+        String test_email3 = "t@tue.nl";
         assertEquals(true, verifier.isValidEmail(test_email3));
+    }
+
+    @Test
+    public void validEmailTest4() {
+        String test_email4 = "t@student.tue.nl";
         assertEquals(true, verifier.isValidEmail(test_email4));
     }
 
     @Test
-    public void nonValidEmailTests() {
+    public void nonValidEmailTest1() {
         String test_email1 = "test@gmail.com";
-        String test_email2 = "hello";
-        String test_email3 = "@tue.nl";
-        String test_email4 = "@student.tue.nl";
         assertEquals(false, verifier.isValidEmail(test_email1));
+    }
+
+    @Test
+    public void nonValidEmailTest2() {
+        String test_email2 = "hello";
         assertEquals(false, verifier.isValidEmail(test_email2));
+    }
+
+    @Test
+    public void nonValidEmailTest3() {
+        String test_email3 = "@tue.nl";
         assertEquals(false, verifier.isValidEmail(test_email3));
+    }
+
+    @Test
+    public void nonValidEmailTest4() {
+        String test_email4 = "@student.tue.nl";
         assertEquals(false, verifier.isValidEmail(test_email4));
     }
 
     @Test
-    public void validNameTests() {
+    public void validNameTest1() {
         String name1 = "omar";
-        String name2 = "Omar";
-        String name3 = "OMAR";
-        String name4 = "omaromar";
         assertEquals(true, verifier.isValidName(name1));
+    }
+
+    @Test
+    public void validNameTest2() {
+        String name2 = "Omar";
         assertEquals(true, verifier.isValidName(name2));
+    }
+
+    @Test
+    public void validNameTest3() {
+        String name3 = "OMAR";
         assertEquals(true, verifier.isValidName(name3));
+    }
+
+    @Test
+    public void validNameTest4() {
+        String name4 = "omaromar";
         assertEquals(true, verifier.isValidName(name4));
     }
 
