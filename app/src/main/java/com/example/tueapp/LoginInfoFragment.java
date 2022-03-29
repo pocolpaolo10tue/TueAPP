@@ -1,5 +1,6 @@
 package com.example.tueapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +28,7 @@ public class LoginInfoFragment extends Fragment {
     TextView user_manual;
     TextView change_password;
     TextView log_out;
-    Button delete_account;
+    TextView delete_account;
 
     FirebaseAuth mAuth;
 

@@ -244,14 +244,37 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/delete_account"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="374dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/delete_account"
-                android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:attr/textColorSecondary" />
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/delete_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/delete_account"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"/>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:id="@+id/delete_account_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:contentDescription="@string/forward_button"
+                    app:srcCompat="@drawable/ic_baseline_arrow_forward_24"
+                    tools:ignore="RedundantDescriptionCheck,TouchTargetSizeCheck" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
