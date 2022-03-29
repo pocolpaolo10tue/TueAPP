@@ -56,7 +56,7 @@ public class EventFragment extends Fragment {
 
 
         //depending on users admin show add event button
-        FloatingActionButton fab = view.findViewById(R.id.floatingActionButton2);
+        FloatingActionButton fab = view.findViewById(R.id.floatingActionButton);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

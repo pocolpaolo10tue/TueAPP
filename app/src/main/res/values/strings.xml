@@ -62,4 +62,7 @@
     <string name="invited">Invited emails</string>
     <string name="profile_picture">Profile Picture</string>
     <string name="forward_button">forward button</string>
+    <string name="accepted_events_eventtab">Accepted Events</string>
+    <string name="invited_events_eventtab">Invited Events</string>
+    <string name="create_event">Create event</string>
 </resources>
