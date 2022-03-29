@@ -41,6 +41,7 @@
     <string name="help">Help</string>
     <string name="user_manual">User manual</string>
     <string name="change_password">Change password</string>
+    <string name="delete_account">Delete account</string>
     <string name="maps">Maps</string>
     <string name="book">Book</string>
     <string name="events">Events</string>
