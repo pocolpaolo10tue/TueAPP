@@ -83,7 +83,6 @@ public class EventFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Event event = dataSnapshot.getValue(Event.class);
-                    String currentEmail = mAuth.getCurrentUser().getEmail();
                     list.add(event);
                 }
                 adapterRecyclerview.notifyDataSetChanged();
