@@ -63,11 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(new EventFragment());
             }
             else if (item.getItemId() == R.id.settings) {
-                if (mAuth.getCurrentUser() == null) {
-                    replaceFragment(new RegisterFragment());
-                } else {
-                    replaceFragment(new LoginInfoFragment());
-                }
+                replaceFragment(new RegisterFragment());
             }
             return true;
         });

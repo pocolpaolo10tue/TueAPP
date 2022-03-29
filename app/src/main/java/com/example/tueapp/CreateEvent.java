@@ -1,35 +1,12 @@
 package com.example.tueapp;
 
-import android.app.DatePickerDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.InputType;
-import android.util.Log;
+
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-
-import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import org.w3c.dom.Text;
-
-import java.text.DateFormat;
-import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.CancellationException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,113 +15,50 @@ import java.util.concurrent.CancellationException;
  */
 public class CreateEvent extends Fragment {
 
-    FirebaseDatabase database;
-    DatabaseReference databaseRef;
-    TextView timefield2;
-    TextInputLayout timefield1;
-    TextView eventName;
-    TextView sDesc;
-    TextView lDesc;
-    DatePickerDialog.OnDateSetListener setListener;
-    Button submit;
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
 
     public CreateEvent() {
         // Required empty public constructor
     }
 
-    public static CreateEvent newInstance() {
-        return new CreateEvent();
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment CreateEvent.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static CreateEvent newInstance(String param1, String param2) {
+        CreateEvent fragment = new CreateEvent();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_create_event, container, false);
-        Button submit = view.findViewById(R.id.Submit);
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText eventNameText = view.findViewById(R.id.textField);
-                String eventName = eventNameText.getText().toString().trim();
-            }
-        });
-
-        timefield1 = view.findViewById(R.id.timeField);
-        timefield2 = view.findViewById(R.id.timeField2);
-        submit = view.findViewById(R.id.Submit);
-        eventName = view.findViewById(R.id.textField_text);
-        sDesc = view.findViewById(R.id.shortDesc_text);
-        lDesc = view.findViewById(R.id.Descr_text);
-
-        timefield2.setShowSoftInputOnFocus(false);
-        timefield2.setInputType(InputType.TYPE_NULL);
-        timefield2.setFocusable(false);
-
-        Calendar calendar = Calendar.getInstance();
-        final int year = calendar.get(Calendar.YEAR);
-        final int month = calendar.get(Calendar.MONTH);
-        final int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-
-        timefield2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        getActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth
-                        , setListener, year, month, day);
-                datePickerDialog.getWindow().setBackgroundDrawable(new
-                        ColorDrawable(Color.TRANSPARENT));
-                datePickerDialog.show();
-            }
-        });
-
-        setListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayofmonth) {
-                month = month + 1;
-                String date = day+"/"+month+"/"+year;
-                timefield2.setText(date);
-            }
-        };
-
-        submit.setOnClickListener(item ->{
-            addToDatabase();
-        });
-
-
-
-        return view;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_create_event, container, false);
     }
-
-    public void addToDatabase() {
-        database = FirebaseDatabase.getInstance(
-                "https://project2-bb61c-default-rtdb.europe-west1.firebasedatabase.app/");
-        databaseRef = database.getReference("Event");
-        String name = eventName.getText().toString().trim();
-        String desc = lDesc.getText().toString().trim();
-        String sdesc = sDesc.getText().toString().trim();
-        Event event = new Event(name,"test", desc, sdesc, true);
-        String id = databaseRef.push().getKey();
-        databaseRef.child(id).setValue(event);
-
-    }
-
-    public void onDateSet(@NonNull DatePicker view, int year, int month, int day) {
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, year);
-        c.set(Calendar.MONTH, month);
-        c.set(Calendar.DAY_OF_MONTH, day);
-        String currentDate = DateFormat.getDateInstance().format(c.getTime());
-
-        EditText datepick = view.findViewById(R.id.timeField2);
-        datepick.setText(day + "-" + month + "-" + year);
-    }
-
 }

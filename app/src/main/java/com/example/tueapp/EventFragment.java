@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,12 +23,9 @@ import java.util.ArrayList;
 public class EventFragment extends Fragment {
 
     RecyclerView recyclerView;
-    RecyclerView recyclerViewAccepted;
     DatabaseReference database;
     AdapterRecyclerview adapterRecyclerview;
-    AdapterRecyclerview adapterRecyclerviewAccepted;
     ArrayList<Event> list;
-    ArrayList<Event> list_accepted;
     FirebaseAuth mAuth;
 
     public EventFragment() {
@@ -57,31 +53,24 @@ public class EventFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        recyclerViewAccepted = view.findViewById(R.id.acceptedEventsView);
-        recyclerViewAccepted.setHasFixedSize(true);
-        recyclerViewAccepted.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         //depending on users admin show add event button
-        FloatingActionButton fab = view.findViewById(R.id.floatingActionButton);
+        FloatingActionButton fab = view.findViewById(R.id.floatingActionButton2);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction replace = getParentFragmentManager().beginTransaction();
-                replace.replace(R.id.frame_layout, new CreateEvent());
-                replace.addToBackStack(null);
-                replace.commit();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frame_layout, new CreateEvent(), null)
+                        .addToBackStack(null);
             }
         });
 
         //create list of events
         list = new ArrayList<>();
-        list_accepted = new ArrayList<>();
         //create view and adapter
-        adapterRecyclerview = new AdapterRecyclerview(getActivity(),list);
-        adapterRecyclerviewAccepted = new AdapterRecyclerview(getActivity(),list_accepted);
+        adapterRecyclerview = new AdapterRecyclerview(list);
         recyclerView.setAdapter(adapterRecyclerview);
-        recyclerViewAccepted.setAdapter(adapterRecyclerview);
 
         //create instance of firebase
         mAuth = FirebaseAuth.getInstance();
@@ -90,20 +79,34 @@ public class EventFragment extends Fragment {
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Event event = dataSnapshot.getValue(Event.class);
-                    if (event.getAccepted().contains(mAuth.getCurrentUser().getEmail())) {
-                        list_accepted.add(event);
-                    } else {
+
+                    String currentEmail = mAuth.getCurrentUser().getEmail();
+                    if (event.getEmail().contains(currentEmail)) {
                         list.add(event);
                     }
+
                 }
+
                 adapterRecyclerview.notifyDataSetChanged();
+
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
+
         return view;
     }
+
+    public void firebaseWrite() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+    }
+
+
 }

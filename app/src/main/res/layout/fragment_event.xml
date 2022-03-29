@@ -6,108 +6,72 @@
     android:layout_height="match_parent"
     tools:context=".EventFragment">
 
+    <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
-            android:id="@+id/scrollView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/linLayout"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/invited_events"
+            app:layout_constraintBottom_toTopOf="@+id/invitedEventsView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/acceptedEventsText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/accepted_events_eventtab"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    app:layout_constraintBottom_toTopOf="@id/acceptedEventsView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/acceptedEventsView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toTopOf="@id/invitedEventsText"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/acceptedEventsText">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-                <TextView
-                    android:id="@+id/invitedEventsText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/invited_events_eventtab"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    app:layout_constraintBottom_toBottomOf="@id/invitedEventsText"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/acceptedEventsView" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/invitedEventsView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/invitedEventsText">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
-
-        <LinearLayout
-            android:id="@+id/linLayout"
-            android:layout_width="match_parent"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/invitedEventsView"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
-            android:orientation="horizontal"
+            android:layout_marginTop="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/accepted_events"
+            app:layout_constraintBottom_toTopOf="@+id/acceptedEventsView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/invitedEventsView" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/acceptedEventsView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/scrollView">
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="355dp"
-                android:clickable="true"
-                android:contentDescription="@string/create_event"
-                android:focusable="true"
-                android:src="@drawable/event_name"
-                android:layout_margin="16dp"/>
-
-        </LinearLayout>
-
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:contentDescription="@string/accepted_events"
+            android:src="@drawable/ic_baseline_plus_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/acceptedEventsView"
+            app:layout_constraintTop_toTopOf="@+id/acceptedEventsView"
+            android:focusable="true" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

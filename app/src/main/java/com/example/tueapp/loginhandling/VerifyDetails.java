@@ -9,21 +9,16 @@ public class VerifyDetails {
 
         Boolean faculty_email = email.contains("@tue.nl");
         Boolean student_email = email.contains("@student.tue.nl");
-        Boolean valid_length = false;
-        if (faculty_email) {
-            valid_length = email.length() >= 8;
-        } else if (student_email) {
-            valid_length = email.length() >= 16;
-        }
+        Boolean email_name_present = email.length() >= 8;
 
-        return (faculty_email || student_email) && valid_length;
+        return (faculty_email || student_email) && email_name_present;
     }
 
     public boolean isValidName(String name) {
         name = name.toLowerCase();
 
         Boolean spaces = name.contains(" ");
-        Boolean min_length = 3 <= name.length();
+        Boolean min_length = 4 <= name.length();
         Boolean max_length = 15 >= name.length();
         Boolean only_letters = name.matches("[a-zA-Z]+");
 
@@ -37,12 +32,10 @@ public class VerifyDetails {
         return contains_number && correct_length;
     }
 
-    public String whyEmailNotValid(String email) throws IllegalArgumentException {
-        if (isValidEmail(email)) {
-            throw new IllegalArgumentException("This is a valid email.");
-        }
+    public String whyEmailNotValid(String email) {
         Boolean faculty_email = email.contains("@tue.nl");
         Boolean student_email = email.contains("@student.tue.nl");
+        Boolean email_name_present = email.length() >= 8;
 
         if (!(faculty_email || student_email)) {
             return "Please use a tu/e email.";
@@ -50,10 +43,7 @@ public class VerifyDetails {
         return "Please enter a valid email.";
     }
 
-    public String whyPassNotValid(String password) throws IllegalArgumentException {
-        if (isValidPassword(password)) {
-            throw new IllegalArgumentException("This is a valid password.");
-        }
+    public String whyPassNotValid(String password) {
         Boolean correct_length = password.length() >= 6;
         Boolean contains_number = password.matches(".*\\d+.*");
 
@@ -63,10 +53,7 @@ public class VerifyDetails {
         return "Password must contain atleast one number.";
     }
 
-    public String whyNameNotValid(String name) throws IllegalArgumentException {
-        if (isValidName(name)) {
-            throw new IllegalArgumentException("This is a valid name.");
-        }
+    public String whyNameNotValid(String name) {
         Boolean spaces = name.contains(" ");
         Boolean min_length = 4 <= name.length();
         Boolean max_length = 15 >= name.length();
