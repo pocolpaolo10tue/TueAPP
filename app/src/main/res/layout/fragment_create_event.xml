@@ -34,6 +34,7 @@
             app:helperText="*required">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textField_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="#616161"
@@ -95,6 +96,7 @@
             app:counterMaxLength="20">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/shortDesc_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />
@@ -114,6 +116,7 @@
             android:inputType="textMultiLine">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/Descr_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />

@@ -22,6 +22,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -40,6 +42,9 @@ public class CreateEvent extends Fragment {
     DatabaseReference databaseRef;
     TextView timefield2;
     TextInputLayout timefield1;
+    TextView eventName;
+    TextView sDesc;
+    TextView lDesc;
     DatePickerDialog.OnDateSetListener setListener;
     Button submit;
 
@@ -74,6 +79,9 @@ public class CreateEvent extends Fragment {
         timefield1 = view.findViewById(R.id.timeField);
         timefield2 = view.findViewById(R.id.timeField2);
         submit = view.findViewById(R.id.Submit);
+        eventName = view.findViewById(R.id.textField_text);
+        sDesc = view.findViewById(R.id.shortDesc_text);
+        lDesc = view.findViewById(R.id.Descr_text);
 
         timefield2.setShowSoftInputOnFocus(false);
         timefield2.setInputType(InputType.TYPE_NULL);
@@ -119,7 +127,10 @@ public class CreateEvent extends Fragment {
         database = FirebaseDatabase.getInstance(
                 "https://project2-bb61c-default-rtdb.europe-west1.firebasedatabase.app/");
         databaseRef = database.getReference("Event");
-        Event event = new Event("test","test", "test", "test", true);
+        String name = eventName.getText().toString().trim();
+        String desc = lDesc.getText().toString().trim();
+        String sdesc = sDesc.getText().toString().trim();
+        Event event = new Event(name,"test", desc, sdesc, true);
         String id = databaseRef.push().getKey();
         databaseRef.child(id).setValue(event);
 
@@ -135,4 +146,5 @@ public class CreateEvent extends Fragment {
         EditText datepick = view.findViewById(R.id.timeField2);
         datepick.setText(day + "-" + month + "-" + year);
     }
+
 }
