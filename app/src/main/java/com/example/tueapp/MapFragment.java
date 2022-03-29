@@ -36,15 +36,27 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MapFragment extends Fragment {
+
+    //variables for location permission
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private boolean locationPermissionGranted;
 
     //Search View
     ArrayAdapter<String> arrayAdapter;
 
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager()
+                .findFragmentById(R.id.map);
+
+        SearchView searchView = (SearchView) view.findViewById(R.id.search);
 
         ListView listView = (ListView) view.findViewById(R.id.my_list);
         List<String> myList = new ArrayList<>();
@@ -52,38 +64,63 @@ public class MapFragment extends Fragment {
         myList.add("yes");
         myList.add("no");
         myList.add("maybe");
+        myList.add("Luna");
+        myList.add("yes");
+        myList.add("no");
+        myList.add("maybe");
+        myList.add("Luna");
+        myList.add("yes");
+        myList.add("no");
+        myList.add("maybe");
+        myList.add("Luna");
+        myList.add("yes");
+        myList.add("no");
+        myList.add("maybe");
 
         arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, myList);
         listView.setAdapter(arrayAdapter);
-    }
+        listView.setVisibility(View.INVISIBLE);
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-
-        inflater.inflate(R.menu.my_menu, menu);
-        MenuItem menuItem = menu.findItem(R.id.search_icon);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setQueryHint("Search Here");
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listView.setVisibility(View.VISIBLE);
+                supportMapFragment.getView().setVisibility(View.INVISIBLE);
+                Toast.makeText(getActivity(), "OMG CLICK",Toast.LENGTH_LONG).show();
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                listView.setVisibility(View.INVISIBLE);
+                supportMapFragment.getView().setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), "Close",Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+                if(myList.toString().toLowerCase().contains(s.toLowerCase())){
+                    arrayAdapter.getFilter().filter(s);
+                }else{
+                    Toast.makeText(getActivity(), "No Match found",Toast.LENGTH_LONG).show();
+                }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                arrayAdapter.getFilter().filter(s);
-                return true;
+                if(myList.toString().toLowerCase().contains(s.toLowerCase())){
+                    arrayAdapter.getFilter().filter(s);
+                }else{
+                    Toast.makeText(getActivity(), "No Match found",Toast.LENGTH_LONG).show();
+                }
+                return false;
             }
         });
-
     }
-
-    //variables for location permission
-    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private boolean locationPermissionGranted;
 
     public MapFragment() {
         // Required empty public constructor
@@ -93,6 +130,7 @@ public class MapFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         //Initialize view
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
 
