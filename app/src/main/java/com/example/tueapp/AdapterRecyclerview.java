@@ -9,13 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclerview.MyViewHolder> {
 
+    Context context;
     ArrayList<Event> list;
 
-    public AdapterRecyclerview(ArrayList<Event> list) {
+    public AdapterRecyclerview(Context context, ArrayList<Event> list) {
+        this.context = context;
         this.list = list;
     }
 

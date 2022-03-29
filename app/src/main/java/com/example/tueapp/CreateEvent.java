@@ -1,7 +1,10 @@
 package com.example.tueapp;
 
 import android.app.DatePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +23,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.CancellationException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,9 +38,10 @@ public class CreateEvent extends Fragment {
 
     FirebaseDatabase database;
     DatabaseReference databaseRef;
-    private TextView timefield2;
-    private TextInputLayout timefield1;
-    private DialogFragment datePicker;
+    TextView timefield2;
+    TextInputLayout timefield1;
+    DatePickerDialog.OnDateSetListener setListener;
+    Button submit;
 
 
     public CreateEvent() {
@@ -63,33 +71,58 @@ public class CreateEvent extends Fragment {
             }
         });
 
+        timefield1 = view.findViewById(R.id.timeField);
         timefield2 = view.findViewById(R.id.timeField2);
+        submit = view.findViewById(R.id.Submit);
+
+        timefield2.setShowSoftInputOnFocus(false);
+        timefield2.setInputType(InputType.TYPE_NULL);
+        timefield2.setFocusable(false);
+
+        Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
 
         timefield2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                datePicker = new DatePickerFragment();
-                datePicker.show(getParentFragmentManager(), "date");
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        getActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth
+                        , setListener, year, month, day);
+                datePickerDialog.getWindow().setBackgroundDrawable(new
+                        ColorDrawable(Color.TRANSPARENT));
+                datePickerDialog.show();
             }
         });
 
-/*
-        EditText datepick = view.findViewById(R.id.timeField);
-        datepick.setOnClickListener(new View.OnClickListener() {
+        setListener = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onClick(View view) {
-                DialogFragment newFragment = new DatePickerFragment();
-                newFragment.show(getParentFragmentManager(), "datePicker");
+            public void onDateSet(DatePicker view, int year, int month, int dayofmonth) {
+                month = month + 1;
+                String date = day+"/"+month+"/"+year;
+                timefield2.setText(date);
             }
-        });
-        */
+        };
 
-        // Inflate the layout for this fragment
+        submit.setOnClickListener(item ->{
+            addToDatabase();
+        });
+
+
+
         return view;
     }
 
     public void addToDatabase() {
-        database = FirebaseDatabase.getInstance();
+        database = FirebaseDatabase.getInstance(
+                "https://project2-bb61c-default-rtdb.europe-west1.firebasedatabase.app/");
+        databaseRef = database.getReference("Event");
+        Event event = new Event("test","test", "test", "test", true);
+        String id = databaseRef.push().getKey();
+        databaseRef.child(id).setValue(event);
+
     }
 
     public void onDateSet(@NonNull DatePicker view, int year, int month, int day) {

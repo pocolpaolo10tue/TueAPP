@@ -71,7 +71,7 @@ public class EventFragment extends Fragment {
         //create list of events
         list = new ArrayList<>();
         //create view and adapter
-        adapterRecyclerview = new AdapterRecyclerview(list);
+        adapterRecyclerview = new AdapterRecyclerview(getActivity(),list);
         recyclerView.setAdapter(adapterRecyclerview);
 
         //create instance of firebase
@@ -81,34 +81,17 @@ public class EventFragment extends Fragment {
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Event event = dataSnapshot.getValue(Event.class);
-
                     String currentEmail = mAuth.getCurrentUser().getEmail();
-                    if (event.getEmail().contains(currentEmail)) {
-                        list.add(event);
-                    }
-
+                    list.add(event);
                 }
-
                 adapterRecyclerview.notifyDataSetChanged();
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
-
         return view;
     }
-
-    public void firebaseWrite() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-    }
-
-
 }
