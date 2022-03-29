@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,7 +42,7 @@ public class MapFragment extends Fragment {
 
     //variables for location permission
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private boolean locationPermissionGranted = MainActivity.getMyData();
+    private boolean locationPermissionGranted;
 
     //Search View
     ArrayAdapter<String> arrayAdapter;
@@ -132,7 +131,6 @@ public class MapFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-
         //Initialize view
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
 
@@ -145,6 +143,8 @@ public class MapFragment extends Fragment {
             @SuppressLint("MissingPermission")
             @Override
             public void onMapReady(@NonNull GoogleMap googleMap) {
+                //get location permission
+                getLocationPermission();
 
                 //if location permission granted show zoom to me button and user on map
                 if (locationPermissionGranted) {
@@ -204,6 +204,65 @@ public class MapFragment extends Fragment {
         });
         return view;
     }
+
+
+    //Code snippet from https://developer.android.com/training/permissions/requesting
+    /**
+     * Prompts the user for permission to use the device location.
+     */
+    private void getLocationPermission() {
+        /*
+         * Request location permission, so that we can get the location of the
+         * device. The result of the permission request is handled by a callback,
+         * onRequestPermissionsResult.
+         */
+        if (ContextCompat.checkSelfPermission(this.getActivity().getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            locationPermissionGranted = true;
+        } else {
+            locationPermissionRequest.launch(new String[] {
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+            });
+        }
+    }
+
+    // Register the permissions callback, which handles the user's response to the
+    // system permissions dialog. Save the return value, an instance of
+    // ActivityResultLauncher, as an instance variable.
+    ActivityResultLauncher<String[]> locationPermissionRequest =
+            registerForActivityResult(new ActivityResultContracts
+                            .RequestMultiplePermissions(), result -> {
+                Boolean fineLocationGranted = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                    fineLocationGranted = result.getOrDefault(
+                            Manifest.permission.ACCESS_FINE_LOCATION, false);
+                }
+                Boolean coarseLocationGranted = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                    coarseLocationGranted = result.getOrDefault(
+                            Manifest.permission.ACCESS_COARSE_LOCATION,false);
+                }
+                if (fineLocationGranted != null && fineLocationGranted) {
+                            // Precise location access granted.
+                            locationPermissionGranted = true;
+                            FragmentTransaction tr = getParentFragmentManager().beginTransaction();
+                            tr.replace(R.id.map, MapFragment.class, null);
+                            tr.commit();
+                        } else if (coarseLocationGranted != null && coarseLocationGranted) {
+                            // Only approximate location access granted.
+                            locationPermissionGranted = true;
+                            FragmentTransaction tr = getParentFragmentManager().beginTransaction();
+                            tr.replace(R.id.map, MapFragment.class, null);
+                            tr.commit();
+                            Toast.makeText(getActivity(), "Granted", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // No location access granted.
+                        }
+                    }
+            );
+
 
 
 }
