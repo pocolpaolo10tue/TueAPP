@@ -88,7 +88,7 @@ public class VerifyDetailsTest {
     @Test
     public void nonValidNameTest2() {
         String name2 = "oma";
-        assertEquals(false, verifier.isValidName(name2));
+        assertEquals(true, verifier.isValidName(name2));
     }
 
     @Test
@@ -221,5 +221,39 @@ public class VerifyDetailsTest {
     public void whyValidPasswordTest4() {
         String password4 = "";
         assertEquals("Password must have at least 6 characters.", verifier.whyPassNotValid(password4));
+    }
+
+    @Test
+    public void whyNameNotValidTestValidNameException() {
+        System.out.println("whyNameNotValidExceptionTest");
+        String input = "Lucas";
+        Class expected = IllegalArgumentException.class;
+        try {
+            verifier.whyNameNotValid(input);
+            fail("should have thrown: " + expected);
+        } catch (Exception e) {
+            assertTrue("type: " + e.getClass().getName() + "should be instance of: "
+                    + expected, expected.isInstance(e));
+
+            assertNotNull("message should not be null",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    public void whyPasswordNotValidTestValidPasswordException() {
+        System.out.println("whyPassNotValidExceptionTest");
+        String input = "123456";
+        Class expected = IllegalArgumentException.class;
+        try {
+            verifier.whyPassNotValid(input);
+            fail("should have thrown: " + expected);
+        } catch (Exception e) {
+            assertTrue("type: " + e.getClass().getName() + "should be instance of: "
+                    + expected, expected.isInstance(e));
+
+            assertNotNull("message should not be null",
+                    e.getMessage());
+        }
     }
 }
