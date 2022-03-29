@@ -1,5 +1,6 @@
 package com.example.tueapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,9 +25,10 @@ public class LoginInfoFragment extends Fragment {
     TextView EmailText;
     TextView NameText;
 
-    Button user_manual;
-    Button change_password;
-    Button log_out;
+    TextView user_manual;
+    TextView change_password;
+    TextView log_out;
+    TextView delete_account;
 
     FirebaseAuth mAuth;
 
@@ -45,6 +47,7 @@ public class LoginInfoFragment extends Fragment {
         user_manual = view.findViewById(R.id.user_manual);
         change_password = view.findViewById(R.id.change_password);
         log_out = view.findViewById(R.id.logout);
+        delete_account = view.findViewById(R.id.delete_account);
 
         EmailText.setText("Email: " + mAuth.getCurrentUser().getEmail());
         NameText.setText("Name: " + mAuth.getCurrentUser().getDisplayName());
@@ -65,9 +68,13 @@ public class LoginInfoFragment extends Fragment {
             Register();
         });
 
-        user_manual.setOnClickListener((item ->{
+        user_manual.setOnClickListener(item ->{
             // TODO: Redirect to user manual
-        }));
+        });
+
+        delete_account.setOnClickListener(item ->{
+            delete_popup();
+        });
 
         return view;
     }
@@ -79,4 +86,10 @@ public class LoginInfoFragment extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    private void delete_popup() {
+        Intent popup = new Intent(getActivity(), Delete_account_popup.class);
+        startActivity(popup);
+    }
+
 }

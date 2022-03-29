@@ -33,19 +33,20 @@
     <string name="login_failed">"Login failed"</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="name">Name:</string>
-    <string name="email">Email:</string>
-    <string name="password">Password: *******</string>
+    <string name="name">Full Name:</string>
+    <string name="email">Your Email Address:</string>
+    <string name="password">User Password: *******</string>
     <string name="study">Study:</string>
     <string name="log_out">Log out</string>
     <string name="help">Help</string>
     <string name="user_manual">User manual</string>
     <string name="change_password">Change password</string>
+    <string name="delete_account">Delete account</string>
     <string name="maps">Maps</string>
     <string name="book">Book</string>
     <string name="events">Events</string>
     <string name="settings">Settings</string>
-    <string name="account">Account</string>
+    <string name="account">Your Account</string>
     <string name="invited_events">Invited events</string>
     <string name="accepted_events">Accepted events</string>
     <string name="title">CardTitle</string>
@@ -53,10 +54,15 @@
     <string name="supporting_text">Long description event</string>
     <string name="action_1">Accept event</string>
     <string name="action_2">deny event</string>
-    <string name="eventName">Event name</string>
+    <string name="eventName">Event name*</string>
     <string name="Location">Location</string>
-    <string name="dateTime">Date and time</string>
-    <string name="shortDesc">Short description</string>
+    <string name="dateTime">Date and time*</string>
+    <string name="shortDesc">Short description*</string>
     <string name="longDesc">Long description</string>
     <string name="invited">Invited emails</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="forward_button">forward button</string>
+    <string name="accepted_events_eventtab">Accepted Events</string>
+    <string name="invited_events_eventtab">Invited Events</string>
+    <string name="create_event">Create event</string>
 </resources>

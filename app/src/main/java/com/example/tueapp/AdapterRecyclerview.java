@@ -4,18 +4,28 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclerview.MyViewHolder> {
 
+    Context context;
     ArrayList<Event> list;
+    Button accept_event;
 
-    public AdapterRecyclerview(ArrayList<Event> list) {
+    public AdapterRecyclerview(Context context, ArrayList<Event> list) {
+        this.context = context;
         this.list = list;
     }
 
@@ -43,6 +53,9 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView eventTitle, shortDescription, longDescription;
+        Button accept_invite;
+        FirebaseDatabase database;
+        FirebaseAuth mAuth;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -50,6 +63,11 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
             eventTitle = itemView.findViewById(R.id.cardTitle);
             shortDescription = itemView.findViewById(R.id.cardShortDescr);
             longDescription = itemView.findViewById(R.id.cardLongDescr);
+            accept_invite = itemView.findViewById(R.id.accept_event);
+            database = FirebaseDatabase.getInstance(
+                    "https://project2-bb61c-default-rtdb.europe-west1.firebasedatabase.app/");
+            mAuth = FirebaseAuth.getInstance();
+
         }
     }
 }

@@ -11,13 +11,8 @@
         android:layout_height="match_parent">
 
         <ScrollView
-            android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/linLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -31,10 +26,10 @@
                     android:layout_marginBottom="8dp"
                     android:text="@string/accepted_events_eventtab"
                     android:textAppearance="?attr/textAppearanceHeadline6"
-                    app:layout_constraintBottom_toTopOf="@id/acceptedEventsView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/acceptedEventsView"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/acceptedEventsView"
@@ -42,10 +37,10 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toTopOf="@id/invitedEventsText"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/acceptedEventsText">
+                    app:layout_constraintTop_toBottomOf="@+id/acceptedEventsText"
+                    app:layout_constraintBottom_toTopOf="@id/invitedEventsText">
 
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -75,38 +70,23 @@
 
                 </androidx.recyclerview.widget.RecyclerView>
 
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floatingActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="355dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@string/create_event"
+                    android:src="@drawable/ic_baseline_plus_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/invitedEventsView" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
-
-        <LinearLayout
-            android:id="@+id/linLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/scrollView">
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="355dp"
-                android:clickable="true"
-                android:contentDescription="@string/create_event"
-                android:focusable="true"
-                android:src="@drawable/event_name"
-                android:layout_margin="16dp"/>
-
-        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

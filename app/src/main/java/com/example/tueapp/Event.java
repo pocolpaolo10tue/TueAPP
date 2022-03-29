@@ -25,17 +25,19 @@ public class Event {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Event(String eventName, String location, LocalDateTime time, String description,
-                 String shortDescription, HashSet email, HashSet accepted, boolean notify) {
+    public Event(String eventName, String location, String description,
+                 String shortDescription, boolean notify) {
         this.eventName = eventName;
         this.location = location;
-        this.time = time;
+//        this.time = time;
         this.description = description;
         this.shortDescription = shortDescription;
-        this.email = email;
-        this.accepted = accepted;
+//        this.email = email;
+        this.accepted = new HashSet<String>();
         this.notify = notify;
     }
+
+    public Event() {}
 
     //getter and setter methods
     public void setEventName(String eventName) {
@@ -89,6 +91,8 @@ public class Event {
     public HashSet getEmail() {
         return email;
     }
+
+    public HashSet<String> getAccepted() { return accepted; }
 
     public void addAccepted(String email) {
         this.email.add(email);
