@@ -24,9 +24,9 @@ public class LoginInfoFragment extends Fragment {
     TextView EmailText;
     TextView NameText;
 
-    Button user_manual;
-    Button change_password;
-    Button log_out;
+    TextView user_manual;
+    TextView change_password;
+    TextView log_out;
 
     FirebaseAuth mAuth;
 

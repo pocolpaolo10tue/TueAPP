@@ -91,7 +91,7 @@ public class CreateEvent extends Fragment {
     public void addToDatabase() {
         database = FirebaseDatabase.getInstance();
     }
-    /*
+
     public void onDateSet(@NonNull DatePicker view, int year, int month, int day) {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR, year);
@@ -102,5 +102,4 @@ public class CreateEvent extends Fragment {
         EditText datepick = view.findViewById(R.id.timeField2);
         datepick.setText(day + "-" + month + "-" + year);
     }
-     */
 }
