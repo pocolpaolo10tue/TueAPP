@@ -23,7 +23,7 @@ public class VerifyDetails {
         name = name.toLowerCase();
 
         Boolean spaces = name.contains(" ");
-        Boolean min_length = 4 <= name.length();
+        Boolean min_length = 3 <= name.length();
         Boolean max_length = 15 >= name.length();
         Boolean only_letters = name.matches("[a-zA-Z]+");
 

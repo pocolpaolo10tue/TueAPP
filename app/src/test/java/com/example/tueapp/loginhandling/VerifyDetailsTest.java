@@ -80,38 +80,146 @@ public class VerifyDetailsTest {
     }
 
     @Test
-    public void nonValidNameTests() {
+    public void nonValidNameTest1() {
         String name1 = "om ar";
-        String name2 = "oma";
-        String name3 = "#omar";
-        String name4 = "omaromaromaromaromaromar";
         assertEquals(false, verifier.isValidName(name1));
+    }
+
+    @Test
+    public void nonValidNameTest2() {
+        String name2 = "oma";
         assertEquals(false, verifier.isValidName(name2));
+    }
+
+    @Test
+    public void nonValidNameTest3() {
+        String name3 = "#omar";
         assertEquals(false, verifier.isValidName(name3));
+    }
+
+    @Test
+    public void nonValidNameTest4() {
+        String name4 = "omaromaromaromaromaromar";
         assertEquals(false, verifier.isValidName(name4));
     }
 
     @Test
-    public void validPasswordTests() {
+    public void validPasswordTest1() {
         String password1 = "admin1";
-        String password2 = "123456a";
-        String password3 = "#12345";
-        String password4 = "ADMIN1";
         assertEquals(true, verifier.isValidPassword(password1));
+    }
+
+    @Test
+    public void validPasswordTest2() {
+        String password2 = "123456a";
         assertEquals(true, verifier.isValidPassword(password2));
+    }
+
+    @Test
+    public void validPasswordTest3() {
+        String password3 = "#12345";
         assertEquals(true, verifier.isValidPassword(password3));
+    }
+
+    @Test
+    public void validPasswordTest4() {
+        String password4 = "ADMIN1";
         assertEquals(true, verifier.isValidPassword(password4));
     }
 
     @Test
-    public void nonValidPasswordTests() {
+    public void nonValidPasswordTest1() {
         String password1 = "adminadmin";
-        String password2 = "admin";
-        String password3 = "admi1";
-        String password4 = "";
         assertEquals(false, verifier.isValidPassword(password1));
+    }
+
+    @Test
+    public void nonValidPasswordTest2() {
+        String password2 = "admin";
         assertEquals(false, verifier.isValidPassword(password2));
+    }
+
+    @Test
+    public void nonValidPasswordTest3() {
+        String password3 = "admi1";
         assertEquals(false, verifier.isValidPassword(password3));
+    }
+
+    @Test
+    public void nonValidPasswordTest4() {
+        String password4 = "";
         assertEquals(false, verifier.isValidPassword(password4));
+    }
+
+    @Test
+    public void whyValidEmailTest1() {
+        String test_email1 = "test@gmail.com";
+        assertEquals("Please use a tu/e email.", verifier.whyEmailNotValid(test_email1));
+    }
+
+    @Test
+    public void whyValidEmailTest2() {
+        String test_email2 = "hello";
+        assertEquals("Please use a tu/e email.", verifier.whyEmailNotValid(test_email2));
+    }
+
+    @Test
+    public void whyValidEmailTest3() {
+        String test_email3 = "@tue.nl";
+        assertEquals("Please enter a valid email.", verifier.whyEmailNotValid(test_email3));
+    }
+
+    @Test
+    public void whyValidEmailTest4() {
+        String test_email4 = "@student.tue.nl";
+        assertEquals("Please enter a valid email.", verifier.whyEmailNotValid(test_email4));
+    }
+
+    @Test
+    public void whyValidNameTest1() {
+        String name1 = "om ar";
+        assertEquals("Name cannot contain spaces.", verifier.whyNameNotValid(name1));
+    }
+
+    @Test
+    public void whyValidNameTest2() {
+        String name2 = "om";
+        assertEquals("Name is too short.", verifier.whyNameNotValid(name2));
+    }
+
+    @Test
+    public void whyValidNameTest3() {
+        String name3 = "#omar";
+        assertEquals("Name can only contain letters.", verifier.whyNameNotValid(name3));
+    }
+
+    @Test
+    public void whyValidNameTest4() {
+        String name4 = "omaromaromaromaromaromar";
+        assertEquals("Name is too long.", verifier.whyNameNotValid(name4));
+    }
+
+    @Test
+    public void whyValidPasswordTest1() {
+        String password1 = "adminadmin";
+        assertEquals("Password must contain atleast one number.", verifier.whyPassNotValid(password1));
+    }
+
+    @Test
+    public void whyValidPasswordTest2() {
+        String password2 = "admin";
+        assertEquals("Password must have at least 6 characters.", verifier.whyPassNotValid(password2));
+    }
+
+    @Test
+    public void whyValidPasswordTest3() {
+        String password3 = "admi1";
+        assertEquals("Password must have at least 6 characters.", verifier.whyPassNotValid(password3));
+    }
+
+    @Test
+    public void whyValidPasswordTest4() {
+        String password4 = "";
+        assertEquals("Password must have at least 6 characters.", verifier.whyPassNotValid(password4));
     }
 }

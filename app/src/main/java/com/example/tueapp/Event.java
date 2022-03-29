@@ -33,7 +33,7 @@ public class Event {
         this.description = description;
         this.shortDescription = shortDescription;
 //        this.email = email;
-//        this.accepted = accepted;
+        this.accepted = new HashSet<String>();
         this.notify = notify;
     }
 
@@ -91,6 +91,8 @@ public class Event {
     public HashSet getEmail() {
         return email;
     }
+
+    public HashSet<String> getAccepted() { return accepted; }
 
     public void addAccepted(String email) {
         this.email.add(email);

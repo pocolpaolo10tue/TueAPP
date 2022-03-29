@@ -24,9 +24,12 @@ import java.util.ArrayList;
 public class EventFragment extends Fragment {
 
     RecyclerView recyclerView;
+    RecyclerView recyclerViewAccepted;
     DatabaseReference database;
     AdapterRecyclerview adapterRecyclerview;
+    AdapterRecyclerview adapterRecyclerviewAccepted;
     ArrayList<Event> list;
+    ArrayList<Event> list_accepted;
     FirebaseAuth mAuth;
 
     public EventFragment() {
@@ -54,6 +57,9 @@ public class EventFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
+        recyclerViewAccepted = view.findViewById(R.id.acceptedEventsView);
+        recyclerViewAccepted.setHasFixedSize(true);
+        recyclerViewAccepted.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         //depending on users admin show add event button
         FloatingActionButton fab = view.findViewById(R.id.floatingActionButton);
@@ -70,9 +76,12 @@ public class EventFragment extends Fragment {
 
         //create list of events
         list = new ArrayList<>();
+        list_accepted = new ArrayList<>();
         //create view and adapter
         adapterRecyclerview = new AdapterRecyclerview(getActivity(),list);
+        adapterRecyclerviewAccepted = new AdapterRecyclerview(getActivity(),list_accepted);
         recyclerView.setAdapter(adapterRecyclerview);
+        recyclerViewAccepted.setAdapter(adapterRecyclerview);
 
         //create instance of firebase
         mAuth = FirebaseAuth.getInstance();
@@ -83,7 +92,11 @@ public class EventFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Event event = dataSnapshot.getValue(Event.class);
-                    list.add(event);
+                    if (event.getAccepted().contains(mAuth.getCurrentUser().getEmail())) {
+                        list_accepted.add(event);
+                    } else {
+                        list.add(event);
+                    }
                 }
                 adapterRecyclerview.notifyDataSetChanged();
             }
