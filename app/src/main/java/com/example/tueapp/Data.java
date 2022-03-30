@@ -52,4 +52,25 @@ public class Data {
 
         return myList;
     }
+    public static double[] getLat() {
+
+        double Lat[] = new double[100];
+
+        Lat[0]= 51.44790482743093;
+        Lat[1]= 51.44924448149617;
+        Lat[2]= 51.44788039894837;
+
+        return Lat;
+    }
+    public static double[] getLong() {
+
+        double Long[] = new double[100];
+
+        Long[0]= 5.486032776614522;
+        Long[1]= 5.487699141970546;
+        Long[2]= 5.495841144320372;
+
+        return Long;
+    }
+
 }
