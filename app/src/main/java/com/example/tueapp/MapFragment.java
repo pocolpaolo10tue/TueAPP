@@ -21,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -47,70 +48,6 @@ public class MapFragment extends Fragment {
     //Creating an arrayAdapter and the List
     ArrayAdapter<String> arrayAdapter;
     List<String> myList = new ArrayList<>();
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        myList.addAll(Data.getMyListData());
-        //We need supportMapFragment here in order to make the map invisible/visible when the listView shows up
-        SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager()
-                .findFragmentById(R.id.map);
-
-        //Creating a SearchView
-        SearchView searchView = (SearchView) view.findViewById(R.id.search);
-
-        //Creating a ListView and adding elements to it
-        ListView listView = (ListView) view.findViewById(R.id.my_list);
-
-        //Setting up the adapter and the listView
-        arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, myList);
-        listView.setAdapter(arrayAdapter);
-
-        //In the beginning the list view need to be invisible
-        listView.setVisibility(View.INVISIBLE);
-        searchView.setQueryHint("Search Here");
-
-        //Setting the listView invisible or visible when the user presses on search icon or close icon
-        searchView.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listView.setVisibility(View.VISIBLE);
-                supportMapFragment.getView().setVisibility(View.INVISIBLE);
-            }
-        });
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                listView.setVisibility(View.INVISIBLE);
-                supportMapFragment.getView().setVisibility(View.VISIBLE);
-                return false;
-            }
-        });
-
-        //Adding a Listener for the text and a filter in order to be easier for the user to search things
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                if(myList.toString().toLowerCase().contains(s.toLowerCase())){
-                    arrayAdapter.getFilter().filter(s);
-                }else{
-                    Toast.makeText(getActivity(), "No Match found",Toast.LENGTH_LONG).show();
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                if(myList.toString().toLowerCase().contains(s.toLowerCase())){
-                    arrayAdapter.getFilter().filter(s);
-                }else{
-                    Toast.makeText(getActivity(), "No Match found",Toast.LENGTH_LONG).show();
-                }
-                return false;
-            }
-        });
-    }
 
     public MapFragment() {
         // Required empty public constructor
@@ -161,6 +98,80 @@ public class MapFragment extends Fragment {
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding));
 
                 googleMap.setMinZoomPreference(googleMap.getCameraPosition().zoom);
+
+                //Get Data
+                myList.addAll(Data.getMyListData());
+
+                //Creating a SearchView
+                SearchView searchView = (SearchView) view.findViewById(R.id.search);
+
+                //Creating a ListView and adding elements to it
+                ListView listView = (ListView) view.findViewById(R.id.my_list);
+
+                //Setting up the adapter and the listView
+                arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, myList);
+                listView.setAdapter(arrayAdapter);
+
+                //In the beginning the list view need to be invisible
+                listView.setVisibility(View.INVISIBLE);
+                // Search bar default text
+                searchView.setQueryHint("Search Here");
+
+                //Setting the listView invisible or visible when the user presses on search icon or close icon
+                searchView.setOnSearchClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        listView.setVisibility(View.VISIBLE);
+                        supportMapFragment.getView().setVisibility(View.INVISIBLE);
+                    }
+                });
+                searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+                    @Override
+                    public boolean onClose() {
+                        listView.setVisibility(View.INVISIBLE);
+                        supportMapFragment.getView().setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                });
+
+                //Adding a Listener for the text and a filter in order to be easier for the user to search things
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String s) {
+                        if(myList.toString().toLowerCase().contains(s.toLowerCase())){
+                            arrayAdapter.getFilter().filter(s);
+                        }else{
+                            Toast.makeText(getActivity(), "No Match found",Toast.LENGTH_LONG).show();
+                        }
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String s) {
+                        if(myList.toString().toLowerCase().contains(s.toLowerCase())){
+                            arrayAdapter.getFilter().filter(s);
+                        }else{
+                            Toast.makeText(getActivity(), "No Match found",Toast.LENGTH_LONG).show();
+                        }
+                        return false;
+                    }
+                });
+
+                //If the user selects something from the list, a marker will be created on the map
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        // Clear all the old markers and close the search view
+                        searchView.setIconified(true);
+                        googleMap.clear();
+
+                        //Creating a marker with the data from Data.java
+                        LatLng marker = new LatLng(Data.getLat()[i], Data.getLong()[i]);
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLng(marker));
+                        googleMap.addMarker(new MarkerOptions().position(marker).title(myList.get(i)));
+                        supportMapFragment.getView().setVisibility(View.VISIBLE);
+                    }
+                });
             }
         });
         return view;
