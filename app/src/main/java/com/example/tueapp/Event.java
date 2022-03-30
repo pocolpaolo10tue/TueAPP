@@ -1,7 +1,6 @@
 package com.example.tueapp;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 
 public class Event {
     //string to store event name
@@ -15,9 +14,9 @@ public class Event {
     //string to store the short description of the event
     private String shortDescription;
     //Hashset to store the invited email addresses
-    private HashSet<String> email;
+    private String email;
     //string to store the accepted invites
-    private HashSet<String> accepted;
+    private String accepted;
     //boolean to send notification
     private boolean notify;
 
@@ -26,14 +25,14 @@ public class Event {
     }
 
     public Event(String eventName, String location, String description,
-                 String shortDescription, boolean notify) {
+                 String shortDescription, String email, boolean notify) {
         this.eventName = eventName;
         this.location = location;
 //        this.time = time;
         this.description = description;
         this.shortDescription = shortDescription;
-//        this.email = email;
-        this.accepted = new HashSet<String>();
+        this.email = email;
+        //this.accepted = accepted;
         this.notify = notify;
     }
 
@@ -81,24 +80,26 @@ public class Event {
     }
 
     public void addEmail(String email) {
-        this.email.add(email);
+        this.email = this.email + ", " + email;
     }
 
     public void removeEmail(String email) {
-        this.email.remove(email);
+        this.email = email.replace(email + ", ", "");
     }
 
-    public HashSet getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public HashSet<String> getAccepted() { return accepted; }
+    public String getAccepted() {
+        return accepted;
+    }
 
     public void addAccepted(String email) {
-        this.email.add(email);
+        this.email = this.email + ", " + email;
     }
 
     public void removeAccepted(String email) {
-        this.email.remove(email);
+        this.email = email.replace(email + ", ", "");
     }
 }

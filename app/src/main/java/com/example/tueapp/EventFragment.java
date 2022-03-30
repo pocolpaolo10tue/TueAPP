@@ -48,6 +48,9 @@ public class EventFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_event, container, false);
 
+        //create instance of firebase
+        mAuth = FirebaseAuth.getInstance();
+
         //create instance of database
         database = FirebaseDatabase.getInstance(
                 "https://project2-bb61c-default-rtdb.europe-west1.firebasedatabase.app/")
@@ -63,6 +66,15 @@ public class EventFragment extends Fragment {
 
         //depending on users admin show add event button
         FloatingActionButton fab = view.findViewById(R.id.floatingActionButton);
+
+        if(mAuth.getCurrentUser() != null) {
+            if (mAuth.getCurrentUser().getEmail().contains("@student.tue.nl")) {
+                fab.setVisibility(View.INVISIBLE);
+            }
+        } else {
+            fab.setVisibility(View.INVISIBLE);
+        }
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,9 +94,6 @@ public class EventFragment extends Fragment {
         adapterRecyclerviewAccepted = new AdapterRecyclerview(getActivity(),list_accepted);
         recyclerView.setAdapter(adapterRecyclerview);
         recyclerViewAccepted.setAdapter(adapterRecyclerview);
-
-        //create instance of firebase
-        mAuth = FirebaseAuth.getInstance();
 
         //add listener if database changes
         database.addValueEventListener(new ValueEventListener() {

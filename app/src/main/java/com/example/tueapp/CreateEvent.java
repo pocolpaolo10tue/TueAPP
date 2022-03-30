@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -36,6 +36,7 @@ public class CreateEvent extends Fragment {
     TextView eventName;
     TextView sDesc;
     TextView lDesc;
+    TextView invitedList;
     DatePickerDialog.OnDateSetListener setListener;
     Button submit;
 
@@ -79,6 +80,7 @@ public class CreateEvent extends Fragment {
         eventName = view.findViewById(R.id.textField_text);
         sDesc = view.findViewById(R.id.shortDesc_text);
         lDesc = view.findViewById(R.id.Descr_text);
+        invitedList = view.findViewById(R.id.invitedList_text);
 
         timefield2.setShowSoftInputOnFocus(false);
         timefield2.setInputType(InputType.TYPE_NULL);
@@ -124,7 +126,16 @@ public class CreateEvent extends Fragment {
         };
 
         //when submit is pressed add the event to the database
-        submit.setOnClickListener(item -> addToDatabase());
+        submit.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  addToDatabase();
+                  FragmentTransaction replace = getParentFragmentManager().beginTransaction();
+                  replace.replace(R.id.frame_layout, new EventFragment());
+                  replace.addToBackStack(null);
+                  replace.commit();
+              }
+        });
 
 
 
@@ -141,7 +152,8 @@ public class CreateEvent extends Fragment {
         String name = eventName.getText().toString().trim();
         String desc = lDesc.getText().toString().trim();
         String sdesc = sDesc.getText().toString().trim();
-        Event event = new Event(name,"test", desc, sdesc, true);
+        String email = invitedList.getText().toString().trim();
+        Event event = new Event(name,"test", desc, sdesc, email, true);
         String id = databaseRef.push().getKey();
         databaseRef.child(id).setValue(event);
 

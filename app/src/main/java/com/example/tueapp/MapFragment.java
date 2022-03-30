@@ -60,9 +60,9 @@ public class MapFragment extends Fragment {
 
         ListView listView = (ListView) view.findViewById(R.id.my_list);
         List<String> myList = new ArrayList<>();
-        myList.add("Luna");
-        myList.add("yes");
-        myList.add("no");
+        myList.add("Athene");
+        myList.add("Atlas");
+        myList.add("Auditorium");
         myList.add("maybe");
         myList.add("Luna");
         myList.add("yes");
