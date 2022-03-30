@@ -70,7 +70,7 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
         FirebaseAuth mAuth;
 
         /**
-         * @param itemView itemView
+         * @param itemView item to be passed
          */
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
