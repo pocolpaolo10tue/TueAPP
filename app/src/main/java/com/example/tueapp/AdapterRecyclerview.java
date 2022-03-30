@@ -11,24 +11,29 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclerview.MyViewHolder> {
 
     Context context;
     ArrayList<Event> list;
-    Button accept_event;
 
+    /**
+     * @param context Context for recyclerView
+     * @param list list with events to display
+     */
     public AdapterRecyclerview(Context context, ArrayList<Event> list) {
         this.context = context;
         this.list = list;
     }
 
+    /**
+     * @param parent Pass on parent
+     * @param viewType pass on viewType
+     * @return new Viewholder
+     */
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,6 +42,10 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
         return new MyViewHolder(v);
     }
 
+    /**
+     * @param holder holder to set text to
+     * @param position position of event to get from list
+     */
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Event event = list.get(position);
@@ -45,6 +54,9 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
         holder.longDescription.setText(event.getDescription());
     }
 
+    /** returns the list size.
+     * @return returns list size
+     */
     @Override
     public int getItemCount() {
         return list.size();
@@ -57,6 +69,9 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
         FirebaseDatabase database;
         FirebaseAuth mAuth;
 
+        /**
+         * @param itemView itemView
+         */
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
