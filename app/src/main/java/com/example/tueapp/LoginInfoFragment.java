@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,10 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginInfoFragment extends Fragment {
@@ -29,6 +26,10 @@ public class LoginInfoFragment extends Fragment {
     TextView change_password;
     TextView log_out;
     TextView delete_account;
+    ImageButton userManualButton;
+    ImageButton logOutButton;
+    ImageButton changePasswordButton;
+    ImageButton deleteAccountButton;
 
     FirebaseAuth mAuth;
 
@@ -48,6 +49,10 @@ public class LoginInfoFragment extends Fragment {
         change_password = view.findViewById(R.id.change_password);
         log_out = view.findViewById(R.id.logout);
         delete_account = view.findViewById(R.id.delete_account);
+        userManualButton = view.findViewById(R.id.user_manual_button);
+        logOutButton = view.findViewById(R.id.logout_button);
+        changePasswordButton = view.findViewById(R.id.change_password_button);
+        deleteAccountButton = view.findViewById(R.id.delete_account_button);
 
         EmailText.setText("Email: " + mAuth.getCurrentUser().getEmail());
         NameText.setText("Name: " + mAuth.getCurrentUser().getDisplayName());
@@ -68,11 +73,21 @@ public class LoginInfoFragment extends Fragment {
             Register();
         });
 
+        logOutButton.setOnClickListener(item ->{
+            mAuth.signOut();
+            Register();
+        });
+
+
         user_manual.setOnClickListener(item ->{
             // TODO: Redirect to user manual
         });
 
         delete_account.setOnClickListener(item ->{
+            delete_popup();
+        });
+
+        deleteAccountButton.setOnClickListener(item ->{
             delete_popup();
         });
 
