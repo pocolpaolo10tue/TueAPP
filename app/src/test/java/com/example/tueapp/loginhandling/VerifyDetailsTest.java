@@ -256,4 +256,21 @@ public class VerifyDetailsTest {
                     e.getMessage());
         }
     }
+
+    @Test
+    public void whyEmailNotValidTestValidEmailException() {
+        System.out.println("whyEmailNotValidExceptionTest");
+        String input = "thisisvalid@tue.nl";
+        Class expected = IllegalArgumentException.class;
+        try {
+            verifier.whyEmailNotValid(input);
+            fail("should have thrown: " + expected);
+        } catch (Exception e) {
+            assertTrue("type: " + e.getClass().getName() + "should be instance of: "
+                    + expected, expected.isInstance(e));
+
+            assertNotNull("message should not be null",
+                    e.getMessage());
+        }
+    }
 }
