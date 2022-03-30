@@ -30,8 +30,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Getting Location Permission
         getLocationPermission();
 
+        //Adjust the overall Layout
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.frame_layout, new MapFragment())
                 .commit();
 
+        // Creating the functionality of the bottom navigation menu
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.map) {
                 replaceFragment(new MapFragment());
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
+    // This function is used to transfer the user from the current fragment to the next one
     private void replaceFragment(Fragment fragment){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -78,16 +81,10 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    //Code snippet from https://developer.android.com/training/permissions/requesting
-    /**
-     * Prompts the user for permission to use the device location.
-     */
+    //Request Location Permission
     private boolean getLocationPermission() {
-        /*
-         * Request location permission, so that we can get the location of the
-         * device. The result of the permission request is handled by a callback,
-         * onRequestPermissionsResult.
-         */
+
+        //Check If Permission is already granted and if it's not granted launch the permission request
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -101,9 +98,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    // Register the permissions callback, which handles the user's response to the
-    // system permissions dialog. Save the return value, an instance of
-    // ActivityResultLauncher, as an instance variable.
+    //Location Permission Request Launcher
     ActivityResultLauncher<String[]> locationPermissionRequest =
             registerForActivityResult(new ActivityResultContracts
                             .RequestMultiplePermissions(), result -> {
@@ -130,10 +125,13 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(getIntent());
 
                         } else {
+                            //Location denied
                             locationPermissionGranted=false;
                         }
                     }
             );
+
+    //Send information to MapFragment regarding the result on the permission request
 
     public static Boolean getMyData() {
         return locationPermissionGranted;

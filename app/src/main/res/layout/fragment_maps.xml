@@ -3,13 +3,15 @@
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#00A8FF">
 
     <SearchView
         android:id="@+id/search"
         android:name="SearchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#00A8FF"
         map:layout_constraintBottom_toTopOf="@id/map"
         map:layout_constraintEnd_toEndOf="parent"
         map:layout_constraintStart_toStartOf="parent"
@@ -20,6 +22,7 @@
         android:name="ListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#00A8FF"
         android:layout_marginTop="70dp"
         map:layout_constraintTop_toTopOf="parent" />
 

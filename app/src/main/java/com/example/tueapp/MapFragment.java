@@ -40,53 +40,43 @@ import java.util.Locale;
 
 public class MapFragment extends Fragment {
 
-    //variables for location permission
+    //Location Permission code and checking if the permission was granted or not in the main activity
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean locationPermissionGranted = MainActivity.getMyData();
 
-    //Search View
+    //Creating an arrayAdapter and the List
     ArrayAdapter<String> arrayAdapter;
-
-
+    List<String> myList = new ArrayList<>();
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        myList.addAll(Data.getMyListData());
+        //We need supportMapFragment here in order to make the map invisible/visible when the listView shows up
         SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
 
+        //Creating a SearchView
         SearchView searchView = (SearchView) view.findViewById(R.id.search);
 
+        //Creating a ListView and adding elements to it
         ListView listView = (ListView) view.findViewById(R.id.my_list);
-        List<String> myList = new ArrayList<>();
-        myList.add("Luna");
-        myList.add("yes");
-        myList.add("no");
-        myList.add("maybe");
-        myList.add("Luna");
-        myList.add("yes");
-        myList.add("no");
-        myList.add("maybe");
-        myList.add("Luna");
-        myList.add("yes");
-        myList.add("no");
-        myList.add("maybe");
-        myList.add("Luna");
-        myList.add("yes");
-        myList.add("no");
-        myList.add("maybe");
 
+        //Setting up the adapter and the listView
         arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, myList);
         listView.setAdapter(arrayAdapter);
-        listView.setVisibility(View.INVISIBLE);
 
+        //In the beginning the list view need to be invisible
+        listView.setVisibility(View.INVISIBLE);
+        searchView.setQueryHint("Search Here");
+
+        //Setting the listView invisible or visible when the user presses on search icon or close icon
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 listView.setVisibility(View.VISIBLE);
                 supportMapFragment.getView().setVisibility(View.INVISIBLE);
-                Toast.makeText(getActivity(), "OMG CLICK",Toast.LENGTH_LONG).show();
             }
         });
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
@@ -94,11 +84,11 @@ public class MapFragment extends Fragment {
             public boolean onClose() {
                 listView.setVisibility(View.INVISIBLE);
                 supportMapFragment.getView().setVisibility(View.VISIBLE);
-                Toast.makeText(getActivity(), "Close",Toast.LENGTH_LONG).show();
                 return false;
             }
         });
 
+        //Adding a Listener for the text and a filter in order to be easier for the user to search things
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -144,28 +134,15 @@ public class MapFragment extends Fragment {
             @Override
             public void onMapReady(@NonNull GoogleMap googleMap) {
 
-                //if location permission granted show zoom to me button and user on map
+                //If location permission granted show zoom to me button and user on map
                 if (locationPermissionGranted) {
                     googleMap.setMyLocationEnabled(true);
                     googleMap.getUiSettings().setMyLocationButtonEnabled(true);
-                    googleMap.setOnMyLocationClickListener(new GoogleMap.OnMyLocationClickListener() {
-                        @Override
-                        public void onMyLocationClick(@NonNull Location location) {
-                            Toast.makeText(getActivity(), location.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                    googleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
-                        @Override
-                        public boolean onMyLocationButtonClick() {
-                            Toast.makeText(getActivity(), "location!", Toast.LENGTH_SHORT).show();
-                            return false;
-                        }
-                    });
                 }
 
-                LatLng one = new LatLng(51.452505317648395, 5.483781791020252);
-                LatLng two = new LatLng(51.4465266596796, 5.4991904032922445);
+                // Creating a map bound of google maps to just show the university area
+                LatLng one = new LatLng(51.45030983918372, 5.486972465720364);
+                LatLng two = new LatLng(51.446981090270604, 5.498534692444809);
 
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
@@ -179,25 +156,11 @@ public class MapFragment extends Fragment {
 
                 int padding = (int) (width * 0.01);
 
-                //googleMap.setLatLngBoundsForCameraTarget(bounds);
+                googleMap.setLatLngBoundsForCameraTarget(bounds);
 
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding));
 
                 googleMap.setMinZoomPreference(googleMap.getCameraPosition().zoom);
-                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                    @Override
-                    public void onMapClick(@NonNull LatLng latLng) {
-                        MarkerOptions markerOptions = new MarkerOptions();
-                        markerOptions.position(latLng);
-                        markerOptions.title(latLng.latitude + ":" + latLng.longitude);
-                        googleMap.clear();
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                                latLng, 10
-                        ));
-                        googleMap.addMarker((markerOptions));
-
-                    }
-                });
             }
         });
         return view;
