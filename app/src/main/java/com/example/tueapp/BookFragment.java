@@ -9,24 +9,28 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link BookFragment#newInstance} factory method to
- * create an instance of this fragment.
- *
- */
+
 public class BookFragment extends Fragment {
 
+    /**
+     * required empty public constructor
+     */
     public BookFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * @param inflater inflater
+     * @param container container to put fragment in
+     * @param savedInstanceState savedInstance
+     * @return webview fragment
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View viewBook = inflater.inflate(R.layout.fragment_book, container, false);
-        WebView webView = (WebView)viewBook.findViewById(R.id.WebView);
+        WebView webView = viewBook.findViewById(R.id.WebView);
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
