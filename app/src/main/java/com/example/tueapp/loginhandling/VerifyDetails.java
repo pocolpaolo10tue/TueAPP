@@ -4,6 +4,11 @@ import java.util.Locale;
 
 public class VerifyDetails {
 
+    /**
+     * validates email.
+     * @param email
+     * @return boolean value if email is valid
+     */
     public boolean isValidEmail(String email) {
         Boolean result;
 
@@ -19,6 +24,11 @@ public class VerifyDetails {
         return (faculty_email || student_email) && valid_length;
     }
 
+    /**
+     * validates name.
+     * @param name
+     * @return boolean value if name is valid
+     */
     public boolean isValidName(String name) {
         name = name.toLowerCase();
 
@@ -30,6 +40,11 @@ public class VerifyDetails {
         return !spaces && min_length && max_length && only_letters;
     }
 
+    /**
+     * validates password.
+     * @param password
+     * @return boolean value if password is valid
+     */
     public boolean isValidPassword(String password) {
         Boolean correct_length = password.length() >= 6;
         Boolean contains_number = password.matches(".*\\d+.*");
@@ -37,6 +52,12 @@ public class VerifyDetails {
         return contains_number && correct_length;
     }
 
+    /**
+     * String why email is not valid.
+     * @param email
+     * @return String with information why email is not valid
+     * @throws IllegalArgumentException if email is valid
+     */
     public String whyEmailNotValid(String email) throws IllegalArgumentException {
         if (isValidEmail(email)) {
             throw new IllegalArgumentException("This is a valid email.");
@@ -50,6 +71,12 @@ public class VerifyDetails {
         return "Please enter a valid email.";
     }
 
+    /**
+     * String why password is not valid.
+     * @param password
+     * @return String with information why password is not valid
+     * @throws IllegalArgumentException if password is valid
+     */
     public String whyPassNotValid(String password) throws IllegalArgumentException {
         if (isValidPassword(password)) {
             throw new IllegalArgumentException("This is a valid password.");
@@ -63,6 +90,12 @@ public class VerifyDetails {
         return "Password must contain atleast one number.";
     }
 
+    /**
+     * String why name is not valid.
+     * @param name
+     * @return String with information why name is not valid
+     * @throws IllegalArgumentException if name is not valid
+     */
     public String whyNameNotValid(String name) throws IllegalArgumentException {
         if (isValidName(name)) {
             throw new IllegalArgumentException("This is a valid name.");
