@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,21 +14,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.w3c.dom.Text;
-
 import java.text.DateFormat;
-import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.CancellationException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,6 +41,9 @@ public class CreateEvent extends Fragment {
     Button submit;
 
 
+    /**
+     * Required empty public constructor
+     */
     public CreateEvent() {
         // Required empty public constructor
     }
@@ -62,6 +57,12 @@ public class CreateEvent extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * @param inflater inflater
+     * @param container container which to inflate in
+     * @param savedInstanceState instance that is already present
+     * @return view with onclicklistener to open calendar
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -94,6 +95,9 @@ public class CreateEvent extends Fragment {
 
 
         timefield2.setOnClickListener(new View.OnClickListener() {
+            /** On click show date selector.
+             * @param view view
+             */
             @Override
             public void onClick(View view) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
@@ -106,14 +110,24 @@ public class CreateEvent extends Fragment {
         });
 
         setListener = new DatePickerDialog.OnDateSetListener() {
+            /** fill in the selected date in the text field.
+             * @param view view
+             * @param year year to be set
+             * @param month month to be set
+             * @param dayofmonth day of month to be set
+             */
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayofmonth) {
+                //increase month by 1 since january is set as 0
                 month = month + 1;
+                //make date string
                 String date = day+"/"+month+"/"+year;
+                //set date string
                 timefield2.setText(date);
             }
         };
 
+        //when submit is pressed add the event to the database
         submit.setOnClickListener(item ->{
             addToDatabase();
         });
@@ -123,6 +137,9 @@ public class CreateEvent extends Fragment {
         return view;
     }
 
+    /**
+     * add item (event) to database.
+     */
     public void addToDatabase() {
         database = FirebaseDatabase.getInstance(
                 "https://project2-bb61c-default-rtdb.europe-west1.firebasedatabase.app/");
@@ -136,6 +153,13 @@ public class CreateEvent extends Fragment {
 
     }
 
+    /**
+     *
+     * @param view
+     * @param year
+     * @param month
+     * @param day
+     */
     public void onDateSet(@NonNull DatePicker view, int year, int month, int day) {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR, year);
