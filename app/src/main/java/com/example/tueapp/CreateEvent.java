@@ -33,7 +33,6 @@ public class CreateEvent extends Fragment {
     FirebaseDatabase database;
     DatabaseReference databaseRef;
     TextView timefield2;
-    TextInputLayout timefield1;
     TextView eventName;
     TextView sDesc;
     TextView lDesc;
@@ -68,16 +67,13 @@ public class CreateEvent extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_create_event, container, false);
+        //can these 2 submit lines be removed? Already declared and other listener attached
         Button submit = view.findViewById(R.id.Submit);
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText eventNameText = view.findViewById(R.id.textField);
-                String eventName = eventNameText.getText().toString().trim();
-            }
+        submit.setOnClickListener(view1 -> {
+            EditText eventNameText = view1.findViewById(R.id.textField);
+            String eventName = eventNameText.getText().toString().trim();
         });
 
-        timefield1 = view.findViewById(R.id.timeField);
         timefield2 = view.findViewById(R.id.timeField2);
         submit = view.findViewById(R.id.Submit);
         eventName = view.findViewById(R.id.textField_text);
@@ -128,9 +124,7 @@ public class CreateEvent extends Fragment {
         };
 
         //when submit is pressed add the event to the database
-        submit.setOnClickListener(item ->{
-            addToDatabase();
-        });
+        submit.setOnClickListener(item -> addToDatabase());
 
 
 
@@ -155,10 +149,10 @@ public class CreateEvent extends Fragment {
 
     /**
      *
-     * @param view
-     * @param year
-     * @param month
-     * @param day
+     * @param view view
+     * @param year year
+     * @param month month
+     * @param day day
      */
     public void onDateSet(@NonNull DatePicker view, int year, int month, int day) {
         Calendar c = Calendar.getInstance();
@@ -168,7 +162,7 @@ public class CreateEvent extends Fragment {
         String currentDate = DateFormat.getDateInstance().format(c.getTime());
 
         EditText datepick = view.findViewById(R.id.timeField2);
-        datepick.setText(day + "-" + month + "-" + year);
+        datepick.setText(new StringBuilder().append(day).append("-").append(month).append("-").append(year).toString());
     }
 
 }
