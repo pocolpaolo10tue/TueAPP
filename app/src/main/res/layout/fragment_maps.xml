@@ -10,7 +10,7 @@
         android:name="SearchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#00A8FF"
+        android:background="#ffffff"
         map:layout_constraintBottom_toTopOf="@id/map"
         map:layout_constraintEnd_toEndOf="parent"
         map:layout_constraintStart_toStartOf="parent"
@@ -21,7 +21,7 @@
         android:name="ListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#00A8FF"
+        android:background="#ffffff"
         android:layout_marginTop="70dp"
         map:layout_constraintTop_toTopOf="parent" />
 
