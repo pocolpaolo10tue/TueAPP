@@ -91,8 +91,8 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
         list = new ArrayList<>();
         list_accepted = new ArrayList<>();
         //create view and adapter
-        adapterRecyclerview = new AdapterRecyclerview(getActivity(),list, this);
-        adapterRecyclerviewAccepted = new AdapterRecyclerview(getActivity(),list_accepted, this);
+        adapterRecyclerview = new AdapterRecyclerview(getActivity(),list, this, this);
+        adapterRecyclerviewAccepted = new AdapterRecyclerview(getActivity(),list_accepted, this, this);
         recyclerView.setAdapter(adapterRecyclerview);
         recyclerViewAccepted.setAdapter(adapterRecyclerview);
 
@@ -123,5 +123,14 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
         event.removeEmail(mAuth.getCurrentUser().getEmail());
         event.addAccepted(mAuth.getCurrentUser().getEmail());
         list.set(position, event);
+        Toast.makeText(getActivity(), "accepted event",Toast.LENGTH_LONG).show();
+    }
+    @Override
+    public void onDenyClick(int position) {
+        Event event;
+        event = list.get(position);
+        event.removeEmail(mAuth.getCurrentUser().getEmail());
+        list.set(position, event);
+        Toast.makeText(getActivity(), "denied event",Toast.LENGTH_LONG).show();
     }
 }
