@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class EventFragment extends Fragment {
+public class EventFragment extends Fragment implements AdapterRecyclerview.OnEventClickListener {
 
     RecyclerView recyclerView;
     RecyclerView recyclerViewAccepted;
@@ -90,8 +91,8 @@ public class EventFragment extends Fragment {
         list = new ArrayList<>();
         list_accepted = new ArrayList<>();
         //create view and adapter
-        adapterRecyclerview = new AdapterRecyclerview(getActivity(),list);
-        adapterRecyclerviewAccepted = new AdapterRecyclerview(getActivity(),list_accepted);
+        adapterRecyclerview = new AdapterRecyclerview(getActivity(),list, this, this);
+        adapterRecyclerviewAccepted = new AdapterRecyclerview(getActivity(),list_accepted, this, this);
         recyclerView.setAdapter(adapterRecyclerview);
         recyclerViewAccepted.setAdapter(adapterRecyclerview);
 
@@ -101,7 +102,10 @@ public class EventFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Event event = dataSnapshot.getValue(Event.class);
-                        list.add(event);
+                    if (event.getEmail() != null) {
+                        if (event.getEmail().contains(mAuth.getCurrentUser().getEmail()))
+                            list.add(event);
+                    }
                 }
                 adapterRecyclerview.notifyDataSetChanged();
             }
@@ -110,5 +114,23 @@ public class EventFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onEventClick(int position) {
+        Event event;
+        event = list.get(position);
+        event.removeEmail(mAuth.getCurrentUser().getEmail());
+        event.addAccepted(mAuth.getCurrentUser().getEmail());
+        list.set(position, event);
+        Toast.makeText(getActivity(), "accepted event",Toast.LENGTH_LONG).show();
+    }
+    @Override
+    public void onDenyClick(int position) {
+        Event event;
+        event = list.get(position);
+        event.removeEmail(mAuth.getCurrentUser().getEmail());
+        list.set(position, event);
+        Toast.makeText(getActivity(), "denied event",Toast.LENGTH_LONG).show();
     }
 }

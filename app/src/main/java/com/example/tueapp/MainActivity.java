@@ -58,7 +58,12 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(new BookFragment());
             }
             else if (item.getItemId() == R.id.events) {
-                replaceFragment(new EventFragment());
+                if (mAuth.getCurrentUser() != null) {
+                    replaceFragment(new EventFragment());
+                } else {
+                    replaceFragment(new RegisterFragment());
+                }
+
             }
             else if (item.getItemId() == R.id.settings) {
                 if (mAuth.getCurrentUser() == null) {

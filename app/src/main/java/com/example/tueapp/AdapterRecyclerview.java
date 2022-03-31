@@ -19,14 +19,19 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
 
     Context context;
     ArrayList<Event> list;
+    private OnEventClickListener mOnEventClickListener;
+    private OnEventClickListener denyClickListener;
 
     /**
      * @param context Context for recyclerView
      * @param list list with events to display
      */
-    public AdapterRecyclerview(Context context, ArrayList<Event> list) {
+    public AdapterRecyclerview(Context context, ArrayList<Event> list, OnEventClickListener
+            onEventClickListener, OnEventClickListener denyClickListener) {
         this.context = context;
         this.list = list;
+        this.mOnEventClickListener = onEventClickListener;
+        this.denyClickListener = denyClickListener;
     }
 
     /**
@@ -39,7 +44,7 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.invite_item,
                 parent, false);
-        return new MyViewHolder(v);
+        return new MyViewHolder(v, mOnEventClickListener, denyClickListener);
     }
 
     /**
@@ -68,21 +73,41 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
         Button accept_invite;
         FirebaseDatabase database;
         FirebaseAuth mAuth;
+        Button acceptButton;
+        Button denyButton;
 
         /**
          * @param itemView item to be passed
          */
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, OnEventClickListener onAcceptListener,
+                            OnEventClickListener onDenyListener) {
             super(itemView);
 
             eventTitle = itemView.findViewById(R.id.cardTitle);
             shortDescription = itemView.findViewById(R.id.cardShortDescr);
             longDescription = itemView.findViewById(R.id.cardLongDescr);
             accept_invite = itemView.findViewById(R.id.accept_event);
+            acceptButton = itemView.findViewById(R.id.accept_event);
+            denyButton = itemView.findViewById(R.id.deny_event);
             database = FirebaseDatabase.getInstance(
                     "https://project2-bb61c-default-rtdb.europe-west1.firebasedatabase.app/");
             mAuth = FirebaseAuth.getInstance();
-
+            acceptButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onAcceptListener.onEventClick(getAdapterPosition());
+                }
+            });
+            denyButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onDenyListener.onDenyClick(getAdapterPosition());
+                }
+            });
         }
+    }
+    public interface OnEventClickListener {
+        void onEventClick(int position);
+        void onDenyClick(int position);
     }
 }

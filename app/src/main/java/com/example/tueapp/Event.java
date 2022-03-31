@@ -32,7 +32,7 @@ public class Event {
         this.description = description;
         this.shortDescription = shortDescription;
         this.email = email;
-        //this.accepted = accepted;
+        this.accepted = accepted;
         this.notify = notify;
     }
 
@@ -84,15 +84,15 @@ public class Event {
     }
 
     public void removeEmail(String email) {
-        this.email = email.replace(email + ", ", "");
+        this.email = this.email.replace(email + ", ", "");
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public String getAccepted() {
-        return accepted;
+        return this.accepted;
     }
 
     public void addAccepted(String email) {
@@ -100,6 +100,6 @@ public class Event {
     }
 
     public void removeAccepted(String email) {
-        this.email = email.replace(email + ", ", "");
+        this.email = this.email.replace(email + ", ", "");
     }
 }
