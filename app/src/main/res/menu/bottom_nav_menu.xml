@@ -9,7 +9,7 @@
     <item android:title="@string/events"
         android:icon="@drawable/ic_baseline_event_24"
         android:id="@+id/events"/>
-    <item android:title="@string/settings"
-        android:icon="@drawable/ic_baseline_settings_24"
+    <item android:title="@string/Account"
+        android:icon="@drawable/ic_baseline_account_circle_24"
         android:id="@+id/settings"/>
 </menu>
