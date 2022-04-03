@@ -29,12 +29,11 @@ public class VerifyDetails {
     public boolean isValidName(String name) {
         name = name.toLowerCase();
 
-        boolean spaces = name.contains(" ");
         boolean min_length = 3 <= name.length();
         boolean max_length = 15 >= name.length();
         boolean only_letters = name.matches("[a-zA-Z]+");
 
-        return !spaces && min_length && max_length && only_letters;
+        return min_length && max_length && only_letters;
     }
 
     /**
@@ -103,14 +102,11 @@ public class VerifyDetails {
         if (isValidName(name)) {
             throw new IllegalArgumentException("This is a valid name.");
         }
-        boolean spaces = name.contains(" ");
         boolean min_length = 4 <= name.length();
         boolean max_length = 15 >= name.length();
         boolean only_letters = name.matches("[a-zA-Z]+");
 
-        if (spaces) {
-            return "Name cannot contain spaces.";
-        } else if (!min_length) {
+        if (!min_length) {
             return "Name is too short.";
         } else if (!max_length) {
             return "Name is too long.";
