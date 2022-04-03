@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.invite_item,
                 parent, false);
-        return new MyViewHolder(v, mOnEventClickListener, denyClickListener);
+        return new MyViewHolder(v, mOnEventClickListener, denyClickListener, list);
     }
 
     /**
@@ -80,7 +81,7 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
          * @param itemView item to be passed
          */
         public MyViewHolder(@NonNull View itemView, OnEventClickListener onAcceptListener,
-                            OnEventClickListener onDenyListener) {
+                            OnEventClickListener onDenyListener, ArrayList<Event> list) {
             super(itemView);
 
             eventTitle = itemView.findViewById(R.id.cardTitle);
@@ -92,17 +93,23 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
             database = FirebaseDatabase.getInstance(
                     "https://project2-bb61c-default-rtdb.europe-west1.firebasedatabase.app/");
             mAuth = FirebaseAuth.getInstance();
-            acceptButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onAcceptListener.onEventClick(getAdapterPosition());
-                }
+            acceptButton.setOnClickListener(item -> {
+                DatabaseReference ref = database
+                        .getReference("Event")
+                        .child(mAuth.getCurrentUser().getUid())
+                        .child("Accepted")
+                        .child(String.valueOf(list.get(getAdapterPosition()).hashCode()));
+                ref.setValue(list.get(getAdapterPosition()));
+                list.remove(getAdapterPosition());
             });
-            denyButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onDenyListener.onDenyClick(getAdapterPosition());
-                }
+            denyButton.setOnClickListener(item -> {
+                DatabaseReference ref = database
+                        .getReference("Event")
+                        .child(mAuth.getCurrentUser().getUid())
+                        .child("Denied")
+                        .child(String.valueOf(list.get(getAdapterPosition()).hashCode()));
+                ref.setValue(list.get(getAdapterPosition()));
+                list.remove(getAdapterPosition());
             });
         }
     }

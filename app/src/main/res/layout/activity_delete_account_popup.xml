@@ -10,48 +10,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:gravity="center"
-        android:padding="8dp">
+        android:orientation="vertical"
+        android:padding="8dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
-        <EditText
-            android:id="@+id/editTextTextPersonName"
+        <Button
+            android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceHeadline5"
-            android:inputType="textPersonName"
-            android:text="Name"
-            android:gravity="center"/>
+            android:layout_margin="32dp"
+            android:layout_weight="1"
+            android:text="Delete" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="32dp"
-            android:text="Are you sure you want to delete your account?"
-            android:gravity="center"/>
+            android:layout_weight="1"
+            android:text="Cancel" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Delete"
-                android:layout_margin="32dp"/>
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Cancle"
-                android:layout_margin="32dp"/>
-        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

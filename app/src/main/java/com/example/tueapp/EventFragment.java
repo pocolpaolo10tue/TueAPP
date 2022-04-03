@@ -31,6 +31,7 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
     AdapterRecyclerview adapterRecyclerviewAccepted;
     ArrayList<Event> list;
     ArrayList<Event> list_accepted;
+    ArrayList<Event> list_denied;
     FirebaseAuth mAuth;
 
     public EventFragment() {
@@ -90,21 +91,55 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
         //create list of events
         list = new ArrayList<>();
         list_accepted = new ArrayList<>();
+        list_denied = new ArrayList<>();
         //create view and adapter
         adapterRecyclerview = new AdapterRecyclerview(getActivity(),list, this, this);
         adapterRecyclerviewAccepted = new AdapterRecyclerview(getActivity(),list_accepted, this, this);
         recyclerView.setAdapter(adapterRecyclerview);
-        recyclerViewAccepted.setAdapter(adapterRecyclerview);
+        recyclerViewAccepted.setAdapter(adapterRecyclerviewAccepted);
 
         //add listener if database changes
-        database.addValueEventListener(new ValueEventListener() {
+        database.child(mAuth.getCurrentUser().getUid())
+                .child("Accepted")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                            Event event = dataSnapshot.getValue(Event.class);
+                            list_accepted.add(event);
+                        }
+                        adapterRecyclerviewAccepted.notifyDataSetChanged();
+                        adapterRecyclerview.notifyDataSetChanged();
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+
+        database.child(mAuth.getCurrentUser().getUid())
+                .child("Denied")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                            Event event = dataSnapshot.getValue(Event.class);
+                            list_denied.add(event);
+                        }
+                        adapterRecyclerview.notifyDataSetChanged();
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+
+        database.child("All").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Event event = dataSnapshot.getValue(Event.class);
-                    if (event.getEmail() != null) {
-                        if (event.getEmail().contains(mAuth.getCurrentUser().getEmail()))
-                            list.add(event);
+                    list.add(event);
+                    if (containsEvent(list_accepted,event) || containsEvent(list_denied,event)) {
+                        list.remove(event);
                     }
                 }
                 adapterRecyclerview.notifyDataSetChanged();
@@ -113,6 +148,7 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
         return view;
     }
 
@@ -132,5 +168,18 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
         event.removeEmail(mAuth.getCurrentUser().getEmail());
         list.set(position, event);
         Toast.makeText(getActivity(), "denied event",Toast.LENGTH_LONG).show();
+    }
+
+    private boolean containsEvent(ArrayList<Event> list, Event event) {
+        for (Event event2 : list) {
+            if (event2.getEventName().equals(event.getEventName())) {
+                if (event2.getDescription().equals(event.getDescription())) {
+                    if (event2.getShortDescription().equals(event.getShortDescription())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

@@ -148,15 +148,14 @@ public class CreateEvent extends Fragment {
     public void addToDatabase() {
         database = FirebaseDatabase.getInstance(
                 "https://project2-bb61c-default-rtdb.europe-west1.firebasedatabase.app/");
-        databaseRef = database.getReference("Event");
+        databaseRef = database.getReference("Event").child("All");
         String name = eventName.getText().toString().trim();
         String desc = lDesc.getText().toString().trim();
         String sdesc = sDesc.getText().toString().trim();
         String email = invitedList.getText().toString().trim();
         Event event = new Event(name,"test", desc, sdesc, email, true);
-        String id = databaseRef.push().getKey();
+        String id = String.valueOf(event.hashCode());
         databaseRef.child(id).setValue(event);
-
     }
 
     /**
@@ -176,5 +175,4 @@ public class CreateEvent extends Fragment {
         EditText datepick = view.findViewById(R.id.timeField2);
         datepick.setText(new StringBuilder().append(day).append("-").append(month).append("-").append(year).toString());
     }
-
 }

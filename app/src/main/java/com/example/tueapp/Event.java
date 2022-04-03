@@ -32,7 +32,7 @@ public class Event {
         this.description = description;
         this.shortDescription = shortDescription;
         this.email = email;
-        this.accepted = accepted;
+        this.accepted = "";
         this.notify = notify;
     }
 
