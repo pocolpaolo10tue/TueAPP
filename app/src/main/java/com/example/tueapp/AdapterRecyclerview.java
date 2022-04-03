@@ -94,21 +94,19 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
                     "https://project2-bb61c-default-rtdb.europe-west1.firebasedatabase.app/");
             mAuth = FirebaseAuth.getInstance();
             acceptButton.setOnClickListener(item -> {
-                DatabaseReference ref = database
-                        .getReference("Event")
-                        .child(mAuth.getCurrentUser().getUid())
-                        .child("Accepted")
-                        .child(String.valueOf(list.get(getAdapterPosition()).hashCode()));
-                ref.setValue(list.get(getAdapterPosition()));
+                Event event = list.get(getAdapterPosition());
+                DatabaseReference event_ref = database.getReference("Event")
+                        .child("All").child(String.valueOf(event.getEventID()));
+                event.addAccepted(mAuth.getCurrentUser().getEmail());
+                event_ref.setValue(event);
                 list.remove(getAdapterPosition());
             });
             denyButton.setOnClickListener(item -> {
-                DatabaseReference ref = database
-                        .getReference("Event")
-                        .child(mAuth.getCurrentUser().getUid())
-                        .child("Denied")
-                        .child(String.valueOf(list.get(getAdapterPosition()).hashCode()));
-                ref.setValue(list.get(getAdapterPosition()));
+                Event event = list.get(getAdapterPosition());
+                DatabaseReference event_ref = database.getReference("Event")
+                        .child("All").child(String.valueOf(event.getEventID()));
+                event.addDenied(mAuth.getCurrentUser().getEmail());
+                event_ref.setValue(event);
                 list.remove(getAdapterPosition());
             });
         }

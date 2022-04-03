@@ -1,6 +1,7 @@
 package com.example.tueapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,53 +100,25 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
         recyclerViewAccepted.setAdapter(adapterRecyclerviewAccepted);
 
         //add listener if database changes
-        database.child(mAuth.getCurrentUser().getUid())
-                .child("Accepted")
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
-                            Event event = dataSnapshot.getValue(Event.class);
-                            list_accepted.add(event);
-                        }
-                        adapterRecyclerviewAccepted.notifyDataSetChanged();
-                        adapterRecyclerview.notifyDataSetChanged();
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
-
-        database.child(mAuth.getCurrentUser().getUid())
-                .child("Denied")
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
-                            Event event = dataSnapshot.getValue(Event.class);
-                            list_denied.add(event);
-                        }
-                        adapterRecyclerview.notifyDataSetChanged();
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
-
         database.child("All").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Event event = dataSnapshot.getValue(Event.class);
-                    list.add(event);
-                    if (containsEvent(list_accepted,event) || containsEvent(list_denied,event)) {
-                        list.remove(event);
+                    String email = mAuth.getCurrentUser().getEmail();
+                    if (event.getAccepted().contains(email) && !list_accepted.contains(event)) {
+                        list_accepted.add(event);
+                    } else if (!event.getDenied().contains(email) && !list.contains(event)) {
+                        list.add(event);
                     }
                 }
                 adapterRecyclerview.notifyDataSetChanged();
+                adapterRecyclerviewAccepted.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                adapterRecyclerview.notifyDataSetChanged();
+                adapterRecyclerviewAccepted.notifyDataSetChanged();
             }
         });
 

@@ -1,5 +1,8 @@
 package com.example.tueapp;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.time.LocalDateTime;
 
 public class Event {
@@ -17,15 +20,19 @@ public class Event {
     private String email;
     //string to store the accepted invites
     private String accepted;
+    //string to store the denied invites
+    private String denied;
     //boolean to send notification
     private boolean notify;
+    //int representing eventid
+    private String eventID;
 
     public void Event(){
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
     public Event(String eventName, String location, String description,
-                 String shortDescription, String email, boolean notify) {
+                 String shortDescription, String email, boolean notify, String id) {
         this.eventName = eventName;
         this.location = location;
 //        this.time = time;
@@ -33,7 +40,9 @@ public class Event {
         this.shortDescription = shortDescription;
         this.email = email;
         this.accepted = "";
+        this.denied = "";
         this.notify = notify;
+        this.eventID = id;
     }
 
     public Event() {}
@@ -96,10 +105,26 @@ public class Event {
     }
 
     public void addAccepted(String email) {
-        this.email = this.email + ", " + email;
+        this.accepted = this.accepted + ", " + email;
     }
 
     public void removeAccepted(String email) {
-        this.email = this.email.replace(email + ", ", "");
+        this.accepted = this.accepted.replace(email + ", ", "");
+    }
+
+    public String getDenied() {
+        return this.denied;
+    }
+
+    public void addDenied(String email) {
+        this.denied = this.denied + ", " + email;
+    }
+
+    public void removeDenied(String email) {
+        this.denied = this.denied.replace(email + ", ", "");
+    }
+
+    public String getEventID() {
+        return this.eventID;
     }
 }

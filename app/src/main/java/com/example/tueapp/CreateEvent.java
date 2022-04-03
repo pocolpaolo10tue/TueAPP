@@ -17,6 +17,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -153,9 +156,19 @@ public class CreateEvent extends Fragment {
         String desc = lDesc.getText().toString().trim();
         String sdesc = sDesc.getText().toString().trim();
         String email = invitedList.getText().toString().trim();
-        Event event = new Event(name,"test", desc, sdesc, email, true);
-        String id = String.valueOf(event.hashCode());
-        databaseRef.child(id).setValue(event);
+        DatabaseReference count_ref = database.getReference("Event").child("Count");
+        count_ref.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    String id = String.valueOf(task.getResult().getValue(Integer.class) + 1);
+                    Event event = new Event(name,"test", desc, sdesc, email, true, id);
+                    databaseRef.child(id).setValue(event);
+                    count_ref.setValue(Integer.valueOf(id));
+                }
+            }
+        });
+
     }
 
     /**
