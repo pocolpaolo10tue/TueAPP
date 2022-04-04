@@ -27,6 +27,8 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -34,6 +36,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +49,14 @@ public class MapFragment extends Fragment {
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean locationPermissionGranted = MainActivity.getMyData();
 
+    //Coordinates Array
+    double coordinates[] = new double[2];
+
     //Creating an arrayAdapter and the List
     ArrayAdapter<String> arrayAdapter;
     List<String> myList = new ArrayList<>();
+
+    FusedLocationProviderClient fusedLocationProviderClient;
 
     public MapFragment() {
         // Required empty public constructor
@@ -170,6 +179,44 @@ public class MapFragment extends Fragment {
                         googleMap.moveCamera(CameraUpdateFactory.newLatLng(marker));
                         googleMap.addMarker(new MarkerOptions().position(marker).title(myList.get(i)));
                         supportMapFragment.getView().setVisibility(View.VISIBLE);
+
+                        // Getting the coordinates
+                        if(locationPermissionGranted) {
+                            if(coordinates[0] == 0.0 || coordinates[1] == 0.0){
+                                Toast.makeText(getActivity(), "1 ", Toast.LENGTH_LONG).show();
+                                getLocation();
+                            }else{
+                                if(coordinates[0] == 0.0 || coordinates[1] == 0.0){
+                                    Toast.makeText(getActivity(), " 2", Toast.LENGTH_LONG).show();
+                                    getLocation();
+                                }else {
+                                    if(coordinates[0] == 0.0 || coordinates[1] == 0.0){
+                                        Toast.makeText(getActivity(), " 3", Toast.LENGTH_LONG).show();
+                                        getLocation();
+                                    }
+                                }
+
+                            }
+                            Toast.makeText(getActivity(), " " + coordinates[0], Toast.LENGTH_LONG).show();
+
+                        }else {
+                            Toast.makeText(getActivity(), "Allow location permission", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+
+            //Getting the current location coordinates
+            private void  getLocation() {
+                fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+                fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        Location location = task.getResult();
+                        if(location != null) {
+                            coordinates[0] = location.getLatitude();
+                            coordinates[1] = location.getLongitude();
+                        }
                     }
                 });
             }
