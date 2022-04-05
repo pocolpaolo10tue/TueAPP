@@ -87,8 +87,8 @@ public class MapFragment extends Fragment {
                 }
 
                 // Creating a map bound of google maps to just show the university area
-                LatLng one = new LatLng(51.45030983918372, 5.486972465720364);
-                LatLng two = new LatLng(51.446981090270604, 5.498534692444809);
+                LatLng one = new LatLng(51.452505317648395, 5.483781791020252);
+                LatLng two = new LatLng(51.4465266596796, 5.4991904032922445);
 
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
