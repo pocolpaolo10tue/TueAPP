@@ -11,7 +11,7 @@ public class Event {
     //string to store location
     private String location;
     //time object to store the time of the event
-    private LocalDateTime time;
+    private String date;
     //string to store the "long" description of the event
     private String description;
     //string to store the short description of the event
@@ -31,11 +31,11 @@ public class Event {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Event(String eventName, String location, String description,
+    public Event(String eventName, String location, String date, String description,
                  String shortDescription, String email, boolean notify, String id) {
         this.eventName = eventName;
         this.location = location;
-//        this.time = time;
+        this.date = date;
         this.description = description;
         this.shortDescription = shortDescription;
         this.email = email;
@@ -64,12 +64,12 @@ public class Event {
         return location;
     }
 
-    public void setTime(LocalDateTime time) {
-        this.time = time;
+    public void setTime(String time) {
+        this.date = date;
     }
 
-    public LocalDateTime getTime() {
-        return time;
+    public String getTime() {
+        return date;
     }
 
     public void setDescription(String description) {

@@ -36,6 +36,7 @@ public class CreateEvent extends Fragment {
 
     FirebaseDatabase database;
     DatabaseReference databaseRef;
+    TextView location;
     TextView timefield2;
     TextView eventName;
     TextView sDesc;
@@ -85,6 +86,7 @@ public class CreateEvent extends Fragment {
         sDesc = view.findViewById(R.id.shortDesc_text);
         lDesc = view.findViewById(R.id.Descr_text);
         invitedList = view.findViewById(R.id.invitedList_text);
+        location = view.findViewById(R.id.locationFieldText);
 
         timefield2.setShowSoftInputOnFocus(false);
         timefield2.setInputType(InputType.TYPE_NULL);
@@ -164,17 +166,19 @@ public class CreateEvent extends Fragment {
         database = FirebaseDatabase.getInstance(
                 "https://project2-bb61c-default-rtdb.europe-west1.firebasedatabase.app/");
         databaseRef = database.getReference("Event").child("All");
+        String loc = location.getText().toString().trim();
         String name = eventName.getText().toString().trim();
         String desc = lDesc.getText().toString().trim();
         String sdesc = sDesc.getText().toString().trim();
         String email = invitedList.getText().toString().trim();
+        String date = timefield2.getText().toString().trim();
         DatabaseReference count_ref = database.getReference("Event").child("Count");
         count_ref.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
                     String id = String.valueOf(task.getResult().getValue(Integer.class) + 1);
-                    Event event = new Event(name,"test", desc, sdesc, email, true, id);
+                    Event event = new Event(name, loc, date, desc, sdesc, email, true, id);
                     databaseRef.child(id).setValue(event);
                     count_ref.setValue(Integer.valueOf(id));
                 }
