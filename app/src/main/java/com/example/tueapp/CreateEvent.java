@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,11 +133,22 @@ public class CreateEvent extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View view) {
-                  addToDatabase();
-                  FragmentTransaction replace = getParentFragmentManager().beginTransaction();
-                  replace.replace(R.id.frame_layout, new EventFragment());
-                  replace.addToBackStack(null);
-                  replace.commit();
+                  if (TextUtils.isEmpty(eventName.getText())) {
+                      eventName.setError("Event name cannot be empty");
+                      eventName.requestFocus();
+                  } else if (TextUtils.isEmpty(sDesc.getText())){
+                      sDesc.setError("Short description cannot be empty");
+                      sDesc.requestFocus();
+                  } else if (TextUtils.isEmpty(timefield2.getText())) {
+                      timefield2.setError("Date cannot be empty");
+                      timefield2.requestFocus();
+                  } else {
+                      addToDatabase();
+                      FragmentTransaction replace = getParentFragmentManager().beginTransaction();
+                      replace.replace(R.id.frame_layout, new EventFragment());
+                      replace.addToBackStack(null);
+                      replace.commit();
+                  }
               }
         });
 
