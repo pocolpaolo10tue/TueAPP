@@ -22,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class EventFragment extends Fragment implements AdapterRecyclerview.OnEventClickListener {
 
@@ -29,11 +31,13 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
     RecyclerView recyclerViewAccepted;
     DatabaseReference database;
     AdapterRecyclerview adapterRecyclerview;
-    AdapterRecyclerview adapterRecyclerviewAccepted;
+    AdapterRecyclerViewAccepted adapterRecyclerviewAccepted;
     ArrayList<Event> list;
     ArrayList<Event> list_accepted;
     ArrayList<Event> list_denied;
     FirebaseAuth mAuth;
+
+
 
     public EventFragment() {
         // Required empty public constructor
@@ -94,8 +98,9 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
         list_accepted = new ArrayList<>();
         list_denied = new ArrayList<>();
         //create view and adapter
-        adapterRecyclerview = new AdapterRecyclerview(getActivity(),list, this, this);
-        adapterRecyclerviewAccepted = new AdapterRecyclerview(getActivity(),list_accepted, this, this);
+        adapterRecyclerview = new AdapterRecyclerview(getActivity()
+                ,list, this, this);
+        adapterRecyclerviewAccepted = new AdapterRecyclerViewAccepted(getActivity(),list_accepted);
         recyclerView.setAdapter(adapterRecyclerview);
         recyclerViewAccepted.setAdapter(adapterRecyclerviewAccepted);
 
@@ -106,9 +111,9 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Event event = dataSnapshot.getValue(Event.class);
                     String email = mAuth.getCurrentUser().getEmail();
-                    if (event.getAccepted().contains(email) && !list_accepted.contains(event)) {
+                    if (event.getAccepted().contains(email) && !containsID(list_accepted,event)) {
                         list_accepted.add(event);
-                    } else if (!event.getDenied().contains(email) && !list.contains(event)) {
+                    } else if (!event.getDenied().contains(email) && !containsID(list,event) && !containsID(list_accepted,event)) {
                         list.add(event);
                     }
                 }
@@ -143,16 +148,32 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
         Toast.makeText(getActivity(), "denied event",Toast.LENGTH_LONG).show();
     }
 
-    private boolean containsEvent(ArrayList<Event> list, Event event) {
+    private boolean containsID(ArrayList<Event> list, Event event) {
         for (Event event2 : list) {
-            if (event2.getEventName().equals(event.getEventName())) {
-                if (event2.getDescription().equals(event.getDescription())) {
-                    if (event2.getShortDescription().equals(event.getShortDescription())) {
-                        return true;
-                    }
-                }
+            if (event.getEventID().equals(event2.getEventID())) {
+                return true;
             }
         }
         return false;
     }
+
+    private void refreshFragment() {
+        Fragment newFragment = new EventFragment() ;
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+//    private void removeDuplicates(ArrayList<Event> list) {
+//        ArrayList<Event> remove = new ArrayList<Event>();
+//        HashMap<Integer,Integer> index_id_table = new HashMap<Integer,Integer>();
+//        for (int i = 0; i < list.size(); i++) {
+//            if (index_id_table.containsKey(Integer.valueOf(list.get(i).getEventID()))) {
+//                remove.add(list.get(i));
+//            } else {
+//                index_id_table.put(Integer.valueOf(list.get(i).getEventID()),i);
+//            }
+//        }
+//    }
 }
