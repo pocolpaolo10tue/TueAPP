@@ -7,153 +7,154 @@
     tools:context=".CreateEvent">
 
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView3"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Event creation"
-            android:padding="32dp"
-            android:gravity="center"
-            android:textAppearance="?attr/textAppearanceHeadline4" />
+            android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textField"
-            app:startIconContentDescription="@string/eventName"
-            app:startIconDrawable="@drawable/event_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/eventName"
-            app:endIconMode="clear_text"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:padding="8dp"
-            app:helperText="*required">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textField_text"
+            <TextView
+                android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="#616161"
-                android:inputType="textCapSentences|textAutoCorrect"/>
+                android:gravity="center"
+                android:padding="32dp"
+                android:text="Event creation"
+                android:textAppearance="?attr/textAppearanceHeadline4" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/locationField"
-            app:startIconContentDescription="@string/Location"
-            app:startIconDrawable="@drawable/add_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/Location"
-            app:endIconMode="clear_text"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:padding="8dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/locationFieldText"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textField"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="#616161" />
+                android:hint="@string/eventName"
+                android:padding="8dp"
+                app:endIconMode="clear_text"
+                app:helperText="*required"
+                app:startIconContentDescription="@string/eventName"
+                app:startIconDrawable="@drawable/event_name">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textField_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences|textAutoCorrect"
+                    android:textColorHint="#616161" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/timeField"
-            app:startIconContentDescription="@string/dateTime"
-            app:startIconDrawable="@drawable/add_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/dateTime"
-            app:endIconMode="clear_text"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:padding="8dp"
-            app:helperText="*required">
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/timeField2"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/locationField"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="date"
-                />
+                android:hint="@string/Location"
+                android:padding="8dp"
+                app:endIconMode="clear_text"
+                app:startIconContentDescription="@string/Location"
+                app:startIconDrawable="@drawable/add_location">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/locationFieldText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="#616161" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/shortDesc"
-            app:startIconContentDescription="@string/shortDesc"
-            app:startIconDrawable="@drawable/short_descr"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/shortDesc"
-            app:endIconMode="clear_text"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:padding="8dp"
-            app:helperText="*required"
-            app:counterEnabled="true"
-            app:counterMaxLength="20">
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/shortDesc_text"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/timeField"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:hint="@string/dateTime"
+                android:padding="8dp"
+                app:endIconMode="clear_text"
+                app:helperText="*required"
+                app:startIconContentDescription="@string/dateTime"
+                app:startIconDrawable="@drawable/add_time">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/timeField2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/Descr"
-            app:startIconContentDescription="@string/longDesc"
-            app:startIconDrawable="@drawable/long_descr"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/longDesc"
-            app:endIconMode="clear_text"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:padding="8dp"
-            android:inputType="textMultiLine">
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/Descr_text"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/shortDesc"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:hint="@string/shortDesc"
+                android:padding="8dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="20"
+                app:endIconMode="clear_text"
+                app:helperText="*required"
+                app:startIconContentDescription="@string/shortDesc"
+                app:startIconDrawable="@drawable/short_descr">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/shortDesc_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/invitedList"
-            app:startIconContentDescription="@string/invited"
-            app:startIconDrawable="@drawable/add_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/invited"
-            app:endIconMode="clear_text"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:padding="8dp">
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/invitedList_text"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/Descr"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                />
+                android:hint="@string/longDesc"
+                android:inputType="textMultiLine"
+                android:padding="8dp"
+                app:endIconMode="clear_text"
+                app:startIconContentDescription="@string/longDesc"
+                app:startIconDrawable="@drawable/long_descr">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/Descr_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/Submit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:insetLeft="8dp"
-            android:insetTop="16dp"
-            android:insetRight="8dp"
-            android:padding="16dp"
-            android:text="Submit" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/invitedList"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/invited"
+                android:padding="8dp"
+                app:endIconMode="clear_text"
+                app:startIconContentDescription="@string/invited"
+                app:startIconDrawable="@drawable/add_email">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/invitedList_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/Submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:insetLeft="8dp"
+                android:insetTop="16dp"
+                android:insetRight="8dp"
+                android:padding="16dp"
+                android:text="Submit" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
