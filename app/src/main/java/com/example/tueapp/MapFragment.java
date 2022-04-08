@@ -33,13 +33,20 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Dash;
+import com.google.android.gms.maps.model.Dot;
+import com.google.android.gms.maps.model.Gap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PatternItem;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -84,6 +91,7 @@ public class MapFragment extends Fragment {
                 if (locationPermissionGranted) {
                     googleMap.setMyLocationEnabled(true);
                     googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+                    getLocation();
                 }
 
                 // Creating a map bound of google maps to just show the university area
@@ -180,27 +188,24 @@ public class MapFragment extends Fragment {
                         googleMap.addMarker(new MarkerOptions().position(marker).title(myList.get(i)));
                         supportMapFragment.getView().setVisibility(View.VISIBLE);
 
-                        // Getting the coordinates
+                        // Checking for permission
                         if(locationPermissionGranted) {
-                            if(coordinates[0] == 0.0 || coordinates[1] == 0.0){
-                                Toast.makeText(getActivity(), "1 ", Toast.LENGTH_LONG).show();
-                                getLocation();
-                            }else{
-                                if(coordinates[0] == 0.0 || coordinates[1] == 0.0){
-                                    Toast.makeText(getActivity(), " 2", Toast.LENGTH_LONG).show();
-                                    getLocation();
-                                }else {
-                                    if(coordinates[0] == 0.0 || coordinates[1] == 0.0){
-                                        Toast.makeText(getActivity(), " 3", Toast.LENGTH_LONG).show();
-                                        getLocation();
-                                    }
-                                }
 
-                            }
-                            Toast.makeText(getActivity(), " " + coordinates[0], Toast.LENGTH_LONG).show();
+                            List<PatternItem> pattern1 = Arrays.asList(
+                                    new Dot(), new Gap(20), new Dot(), new Gap(20));
 
+                            //Get the location and create a line to the location
+                            getLocation();
+                            Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
+                                    .color(0xffFF9F94)
+                                    .pattern(pattern1)
+                                    .add(
+                                            new LatLng(coordinates[0], coordinates[1]),
+                                            new LatLng(Data.getLat()[i], Data.getLong()[i])));
+                            Toast.makeText(getActivity(), " " + coordinates[0]+ " " + coordinates[1], Toast.LENGTH_LONG).show();
                         }else {
-                            Toast.makeText(getActivity(), "Allow location permission", Toast.LENGTH_LONG).show();
+                            //If permission is not granted display a message that will ask the user to turn on the location
+                            Toast.makeText(getActivity(), "Please allow location permission in order to get the route to "+myList.get(i), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
