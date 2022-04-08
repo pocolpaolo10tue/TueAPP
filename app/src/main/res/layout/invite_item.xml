@@ -66,6 +66,13 @@
                 android:text="@string/action_2"
                 style="?attr/borderlessButtonStyle"
                 />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/delete_event"
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete Event" />
         </LinearLayout>
     </LinearLayout>
 

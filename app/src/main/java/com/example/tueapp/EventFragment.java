@@ -156,24 +156,4 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
         }
         return false;
     }
-
-    private void refreshFragment() {
-        Fragment newFragment = new EventFragment() ;
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-//    private void removeDuplicates(ArrayList<Event> list) {
-//        ArrayList<Event> remove = new ArrayList<Event>();
-//        HashMap<Integer,Integer> index_id_table = new HashMap<Integer,Integer>();
-//        for (int i = 0; i < list.size(); i++) {
-//            if (index_id_table.containsKey(Integer.valueOf(list.get(i).getEventID()))) {
-//                remove.add(list.get(i));
-//            } else {
-//                index_id_table.put(Integer.valueOf(list.get(i).getEventID()),i);
-//            }
-//        }
-//    }
 }

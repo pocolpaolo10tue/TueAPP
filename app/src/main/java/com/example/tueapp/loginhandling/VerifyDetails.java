@@ -83,7 +83,7 @@ public class VerifyDetails {
         if (!correct_length) {
             return "Password must have at least 6 characters.";
         }
-        if (contains_number) {
+        if (!contains_number) {
             return "Password must contain at least one number.";
         }
         else {
