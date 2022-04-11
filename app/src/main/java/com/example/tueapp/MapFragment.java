@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +28,8 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.tueapp.directionhelpers.FetchURL;
+import com.example.tueapp.directionhelpers.TaskLoadedCallback;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -50,11 +53,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-public class MapFragment extends Fragment {
+public class MapFragment extends Fragment implements TaskLoadedCallback {
 
     //Location Permission code and checking if the permission was granted or not in the main activity
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean locationPermissionGranted = MainActivity.getMyData();
+    private Polyline currentPolyline;
+    GoogleMap mMap;
 
     //Coordinates Array
     double coordinates[] = new double[2];
@@ -196,12 +201,13 @@ public class MapFragment extends Fragment {
 
                             //Get the location and create a line to the location
                             getLocation();
+                            LatLng currentLocation = new LatLng(coordinates[0], coordinates[1]);
                             Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
                                     .color(0xffFF9F94)
                                     .pattern(pattern1)
-                                    .add(
-                                            new LatLng(coordinates[0], coordinates[1]),
-                                            new LatLng(Data.getLat()[i], Data.getLong()[i])));
+                                    .add(currentLocation, marker));
+                            mMap = googleMap;
+                            new FetchURL(MapFragment.this).execute(getUrl(currentLocation, marker, "walking"), "walking");
                             Toast.makeText(getActivity(), " " + coordinates[0]+ " " + coordinates[1], Toast.LENGTH_LONG).show();
                         }else {
                             //If permission is not granted display a message that will ask the user to turn on the location
@@ -209,6 +215,7 @@ public class MapFragment extends Fragment {
                         }
                     }
                 });
+
             }
 
             //Getting the current location coordinates
@@ -225,7 +232,32 @@ public class MapFragment extends Fragment {
                     }
                 });
             }
+
+            private String getUrl(LatLng origin, LatLng dest, String directionMode) {
+                // Origin of route
+                String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
+                // Destination of route
+                String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+                // Mode
+                String mode = "mode=" + directionMode;
+                // Building the parameters to the web service
+                String parameters = str_origin + "&" + str_dest + "&" + mode;
+                // Output format
+                String output = "json";
+                // Building the url to the web service
+                String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + "AIzaSyABPt8OI0dZCA8C9wQHvbCJRngmqoyZJq0";
+                return url;
+            }
         });
         return view;
+    }
+
+    @Override
+    public void onTaskDone(Object... values) {
+        if (currentPolyline != null)
+            currentPolyline.remove();
+        currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
+        String time = (String) values[1];
+        Toast.makeText(getActivity(), "time= "+time, Toast.LENGTH_LONG).show();
     }
 }
