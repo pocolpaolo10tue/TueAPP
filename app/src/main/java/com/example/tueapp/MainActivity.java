@@ -2,7 +2,9 @@ package com.example.tueapp;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -19,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String MAINTAG = "MainActivity";
     ActivityMainBinding binding;
     public static boolean locationPermissionGranted;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
@@ -74,6 +77,17 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Log.i(MAINTAG, "Landscape");
+        }
+        else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Log.i(MAINTAG, "portrait");
+        }
     }
 
     // This function is used to transfer the user from the current fragment to the next one
