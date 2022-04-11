@@ -102,7 +102,8 @@
             android:enabled="true"
             android:minWidth="64dp"
             android:minHeight="48dp"
-            android:text="@string/action_register" />
+            android:text="@string/action_register"
+            android:layout_marginBottom="16dp"/>
 
         <Button
             android:id="@+id/login"
