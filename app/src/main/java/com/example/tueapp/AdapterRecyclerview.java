@@ -76,6 +76,7 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
         FirebaseAuth mAuth;
         Button acceptButton;
         Button denyButton;
+        Button deleteButton;
 
         /**
          * @param itemView item to be passed
@@ -90,9 +91,13 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
             accept_invite = itemView.findViewById(R.id.accept_event);
             acceptButton = itemView.findViewById(R.id.accept_event);
             denyButton = itemView.findViewById(R.id.deny_event);
+            deleteButton = itemView.findViewById(R.id.delete_event);
             database = FirebaseDatabase.getInstance(
                     "https://project2-bb61c-default-rtdb.europe-west1.firebasedatabase.app/");
             mAuth = FirebaseAuth.getInstance();
+            if (mAuth.getCurrentUser().getEmail().contains("@student.tue.nl")) {
+                deleteButton.setVisibility(View.INVISIBLE);
+            }
             acceptButton.setOnClickListener(item -> {
                 Event event = list.get(getAdapterPosition());
                 DatabaseReference event_ref = database.getReference("Event")
@@ -107,6 +112,13 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
                         .child("All").child(String.valueOf(event.getEventID()));
                 event.addDenied(mAuth.getCurrentUser().getEmail());
                 event_ref.setValue(event);
+                list.remove(getAdapterPosition());
+            });
+            deleteButton.setOnClickListener(item -> {
+                Event event = list.get(getAdapterPosition());
+                DatabaseReference event_ref = database.getReference("Event")
+                        .child("All").child(String.valueOf(event.getEventID()));
+                event_ref.removeValue();
                 list.remove(getAdapterPosition());
             });
         }
