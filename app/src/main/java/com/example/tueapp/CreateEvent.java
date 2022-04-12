@@ -80,7 +80,7 @@ public class CreateEvent extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_create_event, container, false);
         //can these 2 submit lines be removed? Already declared and other listener attached
-        Button submit = view.findViewById(R.id.Submit);
+        submit = view.findViewById(R.id.Submit);
         submit.setOnClickListener(view1 -> {
             EditText eventNameText = view1.findViewById(R.id.textField);
             String eventName = eventNameText.getText().toString().trim();
