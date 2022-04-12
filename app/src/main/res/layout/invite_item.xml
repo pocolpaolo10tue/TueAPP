@@ -55,7 +55,6 @@
                 android:id="@+id/accept_event"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:text="@string/action_1"
                 style="?attr/borderlessButtonStyle"
                 />
@@ -70,7 +69,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/delete_event"
                 style="?attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Delete Event" />
         </LinearLayout>
