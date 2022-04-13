@@ -33,7 +33,7 @@ public class VerifyDetails {
         boolean max_length = 15 >= name.length();
         boolean only_letters = name.matches("[a-zA-Z]+");
 
-        return min_length && max_length && only_letters;
+        return min_length && max_length && only_letters ;
     }
 
     /**

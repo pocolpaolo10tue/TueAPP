@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -81,17 +83,28 @@ public class AdapterRecyclerViewAccepted extends RecyclerView.Adapter
             longDescription = itemView.findViewById(R.id.cardLongDescr);
             deleteButton = itemView.findViewById(R.id.delete_event);
             mAuth = FirebaseAuth.getInstance();
+            database = FirebaseDatabase.getInstance(
+                    "https://project2-bb61c-default-rtdb.europe-west1.firebasedatabase.app/");
+
             if (mAuth.getCurrentUser().getEmail().contains("@student.tue.nl")) {
                 deleteButton.setVisibility(View.INVISIBLE);
             }
-            database = FirebaseDatabase.getInstance(
-                    "https://project2-bb61c-default-rtdb.europe-west1.firebasedatabase.app/");
+
             deleteButton.setOnClickListener(item -> {
                 Event event = list.get(getAdapterPosition());
                 DatabaseReference event_ref = database.getReference("Event")
                         .child("All").child(String.valueOf(event.getEventID()));
                 event_ref.removeValue();
                 list.remove(getAdapterPosition());
+            });
+
+            itemView.setOnClickListener(item -> {
+                if (mAuth.getCurrentUser().getEmail().contains("@tue.nl")) {
+                    Fragment newFragment = new CreateEvent(list.get(getAdapterPosition())) ;
+                    AppCompatActivity activity = (AppCompatActivity) itemView.getContext();
+                    activity.getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.frame_layout,newFragment).addToBackStack(null).commit();
+                }
             });
         }
     }

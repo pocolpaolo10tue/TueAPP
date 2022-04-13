@@ -24,7 +24,7 @@
                 android:padding="8dp">
 
                 <LinearLayout
-                    android:layout_width="382dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
@@ -44,11 +44,13 @@
 
                     <ImageButton
                         android:id="@+id/imageButton"
-                        android:layout_width="102dp"
-                        android:layout_height="103dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:contentDescription="@string/profile_picture"
-                        android:minHeight="48dp"
-                        app:srcCompat="@drawable/ic_baseline_account_circle_24" />
+                        android:minWidth="80dp"
+                        android:minHeight="80dp"
+                        app:srcCompat="@drawable/ic_baseline_account_circle_24"
+                        android:layout_gravity="center"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -146,7 +148,7 @@
                     android:textAppearance="?attr/textAppearanceHeadline5" />
 
                 <LinearLayout
-                    android:layout_width="374dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
@@ -175,12 +177,13 @@
                         android:contentDescription="@string/forward_button"
                         android:minHeight="48dp"
                         app:srcCompat="@drawable/ic_baseline_arrow_forward_24"
-                        tools:ignore="TouchTargetSizeCheck,RedundantDescriptionCheck,DuplicateSpeakableTextCheck" />
+                        tools:ignore="TouchTargetSizeCheck,RedundantDescriptionCheck,DuplicateSpeakableTextCheck"
+                        android:layout_marginEnd="16dp"/>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="374dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
@@ -209,11 +212,12 @@
                         android:background="@null"
                         android:contentDescription="@string/forward_button"
                         app:srcCompat="@drawable/ic_baseline_arrow_forward_24"
-                        tools:ignore="TouchTargetSizeCheck,RedundantDescriptionCheck" />
+                        tools:ignore="TouchTargetSizeCheck,RedundantDescriptionCheck"
+                        android:layout_marginEnd="16dp"/>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="374dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
@@ -226,7 +230,7 @@
                         android:paddingEnd="8dp"
                         android:text="@string/log_out"
                         android:textAppearance="?attr/textAppearanceBody2"
-                        android:textColor="?android:attr/textColorSecondary" />
+                        android:textColor="?android:attr/textColorSecondary"/>
 
                     <Space
                         android:layout_width="0dp"
@@ -240,12 +244,13 @@
                         android:background="@null"
                         android:contentDescription="@string/forward_button"
                         app:srcCompat="@drawable/ic_baseline_arrow_forward_24"
-                        tools:ignore="RedundantDescriptionCheck,TouchTargetSizeCheck" />
+                        tools:ignore="RedundantDescriptionCheck,TouchTargetSizeCheck"
+                        android:layout_marginEnd="16dp"/>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="374dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
@@ -272,7 +277,8 @@
                         android:background="@null"
                         android:contentDescription="@string/forward_button"
                         app:srcCompat="@drawable/ic_baseline_arrow_forward_24"
-                        tools:ignore="RedundantDescriptionCheck,TouchTargetSizeCheck" />
+                        tools:ignore="RedundantDescriptionCheck,TouchTargetSizeCheck"
+                        android:layout_marginEnd="16dp"/>
 
                 </LinearLayout>
 

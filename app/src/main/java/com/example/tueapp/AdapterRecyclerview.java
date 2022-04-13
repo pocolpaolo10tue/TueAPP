@@ -1,6 +1,7 @@
 package com.example.tueapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +9,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclerview.MyViewHolder> {
@@ -77,6 +81,8 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
         Button acceptButton;
         Button denyButton;
         Button deleteButton;
+        Event event;
+        DatabaseReference event_ref;
 
         /**
          * @param itemView item to be passed
@@ -84,6 +90,7 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
         public MyViewHolder(@NonNull View itemView, OnEventClickListener onAcceptListener,
                             OnEventClickListener onDenyListener, ArrayList<Event> list) {
             super(itemView);
+
 
             eventTitle = itemView.findViewById(R.id.cardTitle);
             shortDescription = itemView.findViewById(R.id.cardShortDescr);
@@ -95,32 +102,47 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
             database = FirebaseDatabase.getInstance(
                     "https://project2-bb61c-default-rtdb.europe-west1.firebasedatabase.app/");
             mAuth = FirebaseAuth.getInstance();
+
             if (mAuth.getCurrentUser().getEmail().contains("@student.tue.nl")) {
                 deleteButton.setVisibility(View.INVISIBLE);
             }
-            acceptButton.setOnClickListener(item -> {
-                Event event = list.get(getAdapterPosition());
-                DatabaseReference event_ref = database.getReference("Event")
+
+            if (0 <= getAdapterPosition() && getAdapterPosition() < list.size()) {
+                event = list.get(getAdapterPosition());
+                event_ref = event_ref = database.getReference("Event")
                         .child("All").child(String.valueOf(event.getEventID()));
+            }
+
+            itemView.setOnClickListener(item -> {
+                if (mAuth.getCurrentUser().getEmail().contains("@tue.nl")) {
+                    Fragment newFragment = new CreateEvent(list.get(getAdapterPosition())) ;
+                    AppCompatActivity activity = (AppCompatActivity) itemView.getContext();
+                    activity.getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.frame_layout,newFragment).addToBackStack(null).commit();
+                }
+            });
+            acceptButton.setOnClickListener(item -> {
+                addEvent(list);
                 event.addAccepted(mAuth.getCurrentUser().getEmail());
                 event_ref.setValue(event);
                 list.remove(getAdapterPosition());
             });
             denyButton.setOnClickListener(item -> {
-                Event event = list.get(getAdapterPosition());
-                DatabaseReference event_ref = database.getReference("Event")
-                        .child("All").child(String.valueOf(event.getEventID()));
+                addEvent(list);
                 event.addDenied(mAuth.getCurrentUser().getEmail());
                 event_ref.setValue(event);
                 list.remove(getAdapterPosition());
             });
             deleteButton.setOnClickListener(item -> {
-                Event event = list.get(getAdapterPosition());
-                DatabaseReference event_ref = database.getReference("Event")
-                        .child("All").child(String.valueOf(event.getEventID()));
+                addEvent(list);
                 event_ref.removeValue();
                 list.remove(getAdapterPosition());
             });
+        }
+        public void addEvent(ArrayList<Event> list) {
+            event = list.get(getAdapterPosition());
+            event_ref = event_ref = database.getReference("Event")
+                    .child("All").child(String.valueOf(event.getEventID()));
         }
     }
     public interface OnEventClickListener {

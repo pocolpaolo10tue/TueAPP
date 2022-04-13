@@ -10,6 +10,8 @@
         android:name="SearchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="32dp"
+        android:maxHeight="64dp"
         android:background="#ffffff"
         map:layout_constraintBottom_toTopOf="@id/map"
         map:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffffff"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="50dp"
         map:layout_constraintTop_toTopOf="parent" />
 
     <fragment
@@ -34,5 +36,5 @@
         map:layout_constraintBottom_toBottomOf="parent"
         map:layout_constraintEnd_toEndOf="parent"
         map:layout_constraintStart_toStartOf="parent"
-        map:layout_constraintTop_toTopOf="parent" />
+        map:layout_constraintTop_toTopOf="@id/search" />
 </androidx.constraintlayout.widget.ConstraintLayout>

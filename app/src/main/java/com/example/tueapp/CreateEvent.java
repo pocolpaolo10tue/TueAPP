@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class CreateEvent extends Fragment {
     TextView lDesc;
     TextView invitedList;
     DatePickerDialog.OnDateSetListener setListener;
+    Event old_event;
     Button submit;
 
 
@@ -51,6 +53,10 @@ public class CreateEvent extends Fragment {
      */
     public CreateEvent() {
         // Required empty public constructor
+    }
+
+    public CreateEvent(Event event) {
+        old_event = event;
     }
 
     public static CreateEvent newInstance() {
@@ -74,11 +80,14 @@ public class CreateEvent extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_create_event, container, false);
         //can these 2 submit lines be removed? Already declared and other listener attached
-        Button submit = view.findViewById(R.id.Submit);
+        submit = view.findViewById(R.id.Submit);
         submit.setOnClickListener(view1 -> {
             EditText eventNameText = view1.findViewById(R.id.textField);
             String eventName = eventNameText.getText().toString().trim();
         });
+
+        database = FirebaseDatabase.getInstance(
+                "https://project2-bb61c-default-rtdb.europe-west1.firebasedatabase.app/");
 
         timefield2 = view.findViewById(R.id.timeField2);
         submit = view.findViewById(R.id.Submit);
@@ -96,6 +105,10 @@ public class CreateEvent extends Fragment {
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        if (old_event != null) {
+            setCurrentEvent(old_event);
+        }
 
 
         timefield2.setOnClickListener(new View.OnClickListener() {
@@ -153,9 +166,6 @@ public class CreateEvent extends Fragment {
                   }
               }
         });
-
-
-
         return view;
     }
 
@@ -163,8 +173,9 @@ public class CreateEvent extends Fragment {
      * add item (event) to database.
      */
     public void addToDatabase() {
-        database = FirebaseDatabase.getInstance(
-                "https://project2-bb61c-default-rtdb.europe-west1.firebasedatabase.app/");
+        if (old_event != null) {
+            deleteEvent(old_event);
+        }
         databaseRef = database.getReference("Event").child("All");
         String loc = location.getText().toString().trim();
         String name = eventName.getText().toString().trim();
@@ -184,7 +195,6 @@ public class CreateEvent extends Fragment {
                 }
             }
         });
-
     }
 
     /**
@@ -203,5 +213,25 @@ public class CreateEvent extends Fragment {
 
         EditText datepick = view.findViewById(R.id.timeField2);
         datepick.setText(new StringBuilder().append(day).append("-").append(month).append("-").append(year).toString());
+    }
+
+    /**
+     *
+     * @param event
+     */
+    public void setCurrentEvent(Event event) {
+
+        timefield2.setText(event.getTime());
+        eventName.setText(event.getEventName());
+        sDesc.setText(event.getShortDescription());
+        lDesc.setText(event.getDescription());
+        invitedList.setText(event.getAccepted());
+        location.setText(event.getLocation());
+    }
+
+    public void deleteEvent(Event event) {
+        DatabaseReference ref = database.getReference("Event").child("All")
+                .child(event.getEventID());
+        ref.removeValue();
     }
 }
