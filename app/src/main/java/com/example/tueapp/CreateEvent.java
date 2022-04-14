@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -47,6 +48,7 @@ public class CreateEvent extends Fragment {
     Event old_event;
     Button submit;
     TextView header;
+    FirebaseAuth mAuth;
 
 
     /**
@@ -102,6 +104,8 @@ public class CreateEvent extends Fragment {
         timefield2.setShowSoftInputOnFocus(false);
         timefield2.setInputType(InputType.TYPE_NULL);
         timefield2.setFocusable(false);
+
+        mAuth = FirebaseAuth.getInstance();
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -184,7 +188,7 @@ public class CreateEvent extends Fragment {
         String name = eventName.getText().toString().trim();
         String desc = lDesc.getText().toString().trim();
         String sdesc = sDesc.getText().toString().trim();
-        String email = invitedList.getText().toString().trim();
+        String email = invitedList.getText().toString().trim() + " , " + mAuth.getCurrentUser().getEmail();
         String date = timefield2.getText().toString().trim();
         DatabaseReference count_ref = database.getReference("Event").child("Count");
         count_ref.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -228,7 +232,7 @@ public class CreateEvent extends Fragment {
         eventName.setText(event.getEventName());
         sDesc.setText(event.getShortDescription());
         lDesc.setText(event.getDescription());
-        invitedList.setText(event.getAccepted());
+        invitedList.setText(event.getEmail());
         location.setText(event.getLocation());
     }
 
