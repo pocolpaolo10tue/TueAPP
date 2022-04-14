@@ -62,7 +62,7 @@ public class Data {
         //Athene
         Lat[0]= 51.446033745316804;
         //Atlas
-        Lat[1]= 51.44791078277067;
+        Lat[1]= 51.44739466117641;
         //Auditorium
         Lat[2]= 51.447954608386354;
         //Aurora
@@ -155,7 +155,7 @@ public class Data {
         //Athene
         Long[0]= 5.488759271408982;
         //Atlas
-        Long[1]= 5.486141612612504;
+        Long[1]= 5.486122099846816;
         //Auditorium
         Long[2]= 5.484687710373851;
         //Aurora
