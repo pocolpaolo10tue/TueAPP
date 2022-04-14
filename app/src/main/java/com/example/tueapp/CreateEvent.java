@@ -46,6 +46,7 @@ public class CreateEvent extends Fragment {
     DatePickerDialog.OnDateSetListener setListener;
     Event old_event;
     Button submit;
+    TextView header;
 
 
     /**
@@ -96,6 +97,7 @@ public class CreateEvent extends Fragment {
         lDesc = view.findViewById(R.id.Descr_text);
         invitedList = view.findViewById(R.id.invitedList_text);
         location = view.findViewById(R.id.locationFieldText);
+        header = view.findViewById(R.id.textView3);
 
         timefield2.setShowSoftInputOnFocus(false);
         timefield2.setInputType(InputType.TYPE_NULL);
@@ -108,6 +110,7 @@ public class CreateEvent extends Fragment {
 
         if (old_event != null) {
             setCurrentEvent(old_event);
+            header.setText("Edit Event");
         }
 
 
@@ -138,7 +141,7 @@ public class CreateEvent extends Fragment {
                 //increase month by 1 since january is set as 0
                 month = month + 1;
                 //make date string
-                String date = day+"/"+month+"/"+year;
+                String date = dayofmonth+"/"+month+"/"+year;
                 //set date string
                 timefield2.setText(date);
             }

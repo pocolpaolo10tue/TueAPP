@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,8 +37,6 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
     ArrayList<Event> list_accepted;
     ArrayList<Event> list_denied;
     FirebaseAuth mAuth;
-
-
 
     public EventFragment() {
         // Required empty public constructor
@@ -113,7 +112,7 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
                     String email = mAuth.getCurrentUser().getEmail();
                     if (event.getAccepted().contains(email) && !containsID(list_accepted,event)) {
                         list_accepted.add(event);
-                    } else if (!event.getDenied().contains(email) && !containsID(list,event) && !containsID(list_accepted,event)) {
+                    } else if (!event.getDenied().contains(email) && !containsID(list,event) && !containsID(list_accepted,event) && event.getEmail().contains(email)) {
                         list.add(event);
                     }
                 }

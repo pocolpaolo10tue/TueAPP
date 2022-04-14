@@ -26,6 +26,8 @@ public class Event {
     private boolean notify;
     //int representing eventid
     private String eventID;
+    // string to hold invited users.
+    private String invited;
 
     public void Event(){
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
