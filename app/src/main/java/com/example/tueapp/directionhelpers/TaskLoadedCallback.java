@@ -1,9 +1,6 @@
 package com.example.tueapp.directionhelpers;
 
-/**
- * Created by Vishal on 10/20/2018.
- */
-
+//The method that checks when the task is done
 public interface TaskLoadedCallback {
     void onTaskDone(Object... values);
 }

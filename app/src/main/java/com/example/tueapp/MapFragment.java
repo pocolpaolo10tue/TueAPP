@@ -199,16 +199,17 @@ public class MapFragment extends Fragment implements TaskLoadedCallback {
                             List<PatternItem> pattern1 = Arrays.asList(
                                     new Dot(), new Gap(20), new Dot(), new Gap(20));
 
-                            //Get the location and create a line to the location
+                            //Get the location and create a dotted line to the destination
                             getLocation();
                             LatLng currentLocation = new LatLng(coordinates[0], coordinates[1]);
                             Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
                                     .color(0xffFF9F94)
                                     .pattern(pattern1)
                                     .add(currentLocation, marker));
+
+                            //Parse the data to get the route from the current location to the destination
                             mMap = googleMap;
                             new FetchURL(MapFragment.this).execute(getUrl(currentLocation, marker, "walking"), "walking");
-                            Toast.makeText(getActivity(), " " + coordinates[0]+ " " + coordinates[1], Toast.LENGTH_LONG).show();
                         }else {
                             //If permission is not granted display a message that will ask the user to turn on the location
                             Toast.makeText(getActivity(), "Please allow location permission in order to get the route to "+myList.get(i), Toast.LENGTH_LONG).show();
@@ -252,12 +253,15 @@ public class MapFragment extends Fragment implements TaskLoadedCallback {
         return view;
     }
 
+    //When the data is parsed draw the fastest route
     @Override
     public void onTaskDone(Object... values) {
         if (currentPolyline != null)
             currentPolyline.remove();
+        //Creating the route
         currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
+        //Displaying the time left
         String time = (String) values[1];
-        Toast.makeText(getActivity(), "time= "+time, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), time+" left", Toast.LENGTH_LONG).show();
     }
 }
