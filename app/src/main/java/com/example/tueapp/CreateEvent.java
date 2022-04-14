@@ -188,7 +188,12 @@ public class CreateEvent extends Fragment {
         String name = eventName.getText().toString().trim();
         String desc = lDesc.getText().toString().trim();
         String sdesc = sDesc.getText().toString().trim();
-        String email = invitedList.getText().toString().trim() + " , " + mAuth.getCurrentUser().getEmail();
+        String email;
+        if (old_event == null) {
+            email = invitedList.getText().toString().trim() + " , " + mAuth.getCurrentUser().getEmail();
+        } else {
+            email = invitedList.getText().toString().trim();
+        }
         String date = timefield2.getText().toString().trim();
         DatabaseReference count_ref = database.getReference("Event").child("Count");
         count_ref.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
