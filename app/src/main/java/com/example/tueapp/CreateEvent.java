@@ -198,7 +198,7 @@ public class CreateEvent extends Fragment {
                     String id = String.valueOf(task.getResult().getValue(Integer.class) + 1);
                     Event event = new Event(name, loc, date, desc, sdesc, email, true, id);
                     if (!event.getEmail().contains(mAuth.getCurrentUser().getEmail())) {
-                        event.addAccepted(mAuth.getCurrentUser().getEmail());
+                        event.addEmail(mAuth.getCurrentUser().getEmail());
                     }
                     databaseRef.child(id).setValue(event);
                     count_ref.setValue(Integer.valueOf(id));
