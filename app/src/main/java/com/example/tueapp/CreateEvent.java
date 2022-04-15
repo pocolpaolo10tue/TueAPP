@@ -188,7 +188,7 @@ public class CreateEvent extends Fragment {
         String name = eventName.getText().toString().trim();
         String desc = lDesc.getText().toString().trim();
         String sdesc = sDesc.getText().toString().trim();
-        String email = invitedList.getText().toString().trim() + " , " + mAuth.getCurrentUser().getEmail();
+        String email = invitedList.getText().toString().trim();
         String date = timefield2.getText().toString().trim();
         DatabaseReference count_ref = database.getReference("Event").child("Count");
         count_ref.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -197,6 +197,9 @@ public class CreateEvent extends Fragment {
                 if (task.isSuccessful()) {
                     String id = String.valueOf(task.getResult().getValue(Integer.class) + 1);
                     Event event = new Event(name, loc, date, desc, sdesc, email, true, id);
+                    if (!event.getEmail().contains(mAuth.getCurrentUser().getEmail())) {
+                        event.addAccepted(mAuth.getCurrentUser().getEmail());
+                    }
                     databaseRef.child(id).setValue(event);
                     count_ref.setValue(Integer.valueOf(id));
                 }
@@ -232,7 +235,7 @@ public class CreateEvent extends Fragment {
         eventName.setText(event.getEventName());
         sDesc.setText(event.getShortDescription());
         lDesc.setText(event.getDescription());
-        invitedList.setText(event.getEmail().replace(mAuth.getCurrentUser().getEmail(),""));
+        invitedList.setText(event.getEmail());
         location.setText(event.getLocation());
     }
 
