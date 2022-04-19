@@ -1,11 +1,9 @@
 package com.example.tueapp;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,8 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 
 public class EventFragment extends Fragment implements AdapterRecyclerview.OnEventClickListener {
 
@@ -32,7 +28,7 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
     RecyclerView recyclerViewAccepted;
     DatabaseReference database;
     AdapterRecyclerview adapterRecyclerview;
-    AdapterRecyclerViewAccepted adapterRecyclerviewAccepted;
+    AdapterRecyclerview adapterRecyclerviewAccepted;
     ArrayList<Event> list;
     ArrayList<Event> list_accepted;
     ArrayList<Event> list_denied;
@@ -98,8 +94,9 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
         list_denied = new ArrayList<>();
         //create view and adapter
         adapterRecyclerview = new AdapterRecyclerview(getActivity()
-                ,list, this, this);
-        adapterRecyclerviewAccepted = new AdapterRecyclerViewAccepted(getActivity(),list_accepted);
+                ,list, this, this, false);
+        adapterRecyclerviewAccepted = new AdapterRecyclerview(getActivity(),list_accepted
+                ,this,this,true);
         recyclerView.setAdapter(adapterRecyclerview);
         recyclerViewAccepted.setAdapter(adapterRecyclerviewAccepted);
 
