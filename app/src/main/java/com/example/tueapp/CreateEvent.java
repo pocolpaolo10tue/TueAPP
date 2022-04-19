@@ -166,10 +166,7 @@ public class CreateEvent extends Fragment {
                       timefield2.requestFocus();
                   } else {
                       addToDatabase();
-                      FragmentTransaction replace = getParentFragmentManager().beginTransaction();
-                      replace.replace(R.id.frame_layout, new EventFragment());
-                      replace.addToBackStack(null);
-                      replace.commit();
+                      getActivity().onBackPressed();
                   }
               }
         });

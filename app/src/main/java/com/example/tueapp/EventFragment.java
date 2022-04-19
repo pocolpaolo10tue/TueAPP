@@ -87,7 +87,7 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
             public void onClick(View v) {
                 FragmentTransaction replace = getParentFragmentManager().beginTransaction();
                 replace.replace(R.id.frame_layout, new CreateEvent());
-                replace.addToBackStack(null);
+                replace.addToBackStack(EventFragment.class.getName());
                 replace.commit();
             }
         });

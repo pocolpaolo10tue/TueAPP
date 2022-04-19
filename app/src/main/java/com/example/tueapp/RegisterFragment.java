@@ -70,17 +70,17 @@ public class RegisterFragment extends Fragment {
 
         //OnClick listener for the register method
         RegisterButton.setOnClickListener(item ->{
-            Register();
+            Register(this);
         });
         //on click listener to go to login fragment
         LoginButton.setOnClickListener(item ->{
-            Login();
+            Login(this);
         });
 
         return view;
     }
 
-    private void Register() {
+    private void Register(Fragment current) {
         //get email from textfield
         String email = InputEmail.getText().toString().trim();
         //get password from textfield
@@ -139,7 +139,7 @@ public class RegisterFragment extends Fragment {
                                         .build();
                                 mAuth.getCurrentUser().updateProfile(profileUpdates);
                                 //go to login fragment
-                                Login();
+                                Login(current);
                             } else {
                                 //show error message
                                 Toast.makeText(getActivity(), "Error: " + task.getException()
@@ -150,11 +150,11 @@ public class RegisterFragment extends Fragment {
         }
     }
 
-    private void Login() {
+    private void Login(Fragment current) {
         Fragment newFragment = new LoginFragment() ;
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, newFragment);
-        transaction.addToBackStack(null);
+        transaction.addToBackStack(RegisterFragment.class.getName());
         transaction.commit();
     }
 }
