@@ -53,7 +53,6 @@ public class Data {
         return myList;
     }
 
-
     //The Latitudes
     public static double[] getLat() {
 
@@ -137,12 +136,6 @@ public class Data {
         Lat[37]= 51.446328406270865;
         //Zwarte Doos
         Lat[38]= 51.44637163051971;
-
-
-
-
-
-
 
         return Lat;
     }
@@ -230,9 +223,6 @@ public class Data {
         Long[37]= 5.48506532067811;
         //Zwarte Doos
         Long[38]= 5.48433211918479;
-
-
-
 
         return Long;
     }

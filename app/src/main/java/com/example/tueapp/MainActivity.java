@@ -49,13 +49,13 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.frame_layout, new MapFragment())
+                .add(R.id.frame_layout, new MapFragment(locationPermissionGranted))
                 .commit();
 
         // Creating the functionality of the bottom navigation menu
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.map) {
-                replaceFragment(new MapFragment());
+                replaceFragment(new MapFragment(locationPermissionGranted));
             }
             else if(item.getItemId() == R.id.book) {
                 replaceFragment(new BookFragment());
@@ -149,10 +149,4 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
             );
-
-    //Send information to MapFragment regarding the result on the permission request
-
-    public static Boolean getMyData() {
-        return locationPermissionGranted;
-    }
 }
