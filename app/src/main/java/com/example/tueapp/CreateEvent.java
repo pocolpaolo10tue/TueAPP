@@ -191,7 +191,7 @@ public class CreateEvent extends Fragment {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
                     String id = String.valueOf(task.getResult().getValue(Integer.class) + 1);
-                    Event event = new Event(name, loc, date, desc, sdesc, email, true, id);
+                    Event event = new Event(name, loc, date, desc, sdesc, email, id);
                     if (!event.getEmail().contains(mAuth.getCurrentUser().getEmail())) {
                         event.addEmail(mAuth.getCurrentUser().getEmail());
                     }
