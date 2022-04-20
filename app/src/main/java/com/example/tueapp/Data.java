@@ -57,7 +57,7 @@ public class Data {
     //The Latitudes
     public static double[] getLat() {
 
-        double Lat[] = new double[100];
+        double[] Lat = new double[100];
 
         //Athene
         Lat[0]= 51.446033745316804;
@@ -150,7 +150,7 @@ public class Data {
     //The Longitudes
     public static double[] getLong() {
 
-        double Long[] = new double[100];
+        double[] Long = new double[100];
 
         //Athene
         Long[0]= 5.488759271408982;

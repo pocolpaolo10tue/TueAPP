@@ -44,7 +44,7 @@ public class MapFragment extends Fragment implements TaskLoadedCallback {
     GoogleMap mMap;
 
     //Coordinates Array
-    double coordinates[] = new double[2];
+    double[] coordinates = new double[2];
 
     //Creating an arrayAdapter and the List
     ArrayAdapter<String> arrayAdapter;
@@ -107,10 +107,10 @@ public class MapFragment extends Fragment implements TaskLoadedCallback {
                 myList.addAll(Data.getMyListData());
 
                 //Creating a SearchView
-                SearchView searchView = (SearchView) view.findViewById(R.id.search);
+                SearchView searchView = view.findViewById(R.id.search);
 
                 //Creating a ListView and adding elements to it
-                ListView listView = (ListView) view.findViewById(R.id.my_list);
+                ListView listView = view.findViewById(R.id.my_list);
 
                 //Setting up the adapter and the listView
                 arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, myList);

@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -196,7 +195,7 @@ public class CreateEvent extends Fragment {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
                     String id = String.valueOf(task.getResult().getValue(Integer.class) + 1);
-                    Event event = new Event(name, loc, date, desc, sdesc, email, true, id);
+                    Event event = new Event(name, loc, date, desc, sdesc, email, id);
                     databaseRef.child(id).setValue(event);
                     count_ref.setValue(Integer.valueOf(id));
                 }
@@ -205,26 +204,7 @@ public class CreateEvent extends Fragment {
     }
 
     /**
-     *
-     * @param view view
-     * @param year year
-     * @param month month
-     * @param day day
-     */
-    public void onDateSet(@NonNull DatePicker view, int year, int month, int day) {
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, year);
-        c.set(Calendar.MONTH, month);
-        c.set(Calendar.DAY_OF_MONTH, day);
-        String currentDate = DateFormat.getDateInstance().format(c.getTime());
-
-        EditText datepick = view.findViewById(R.id.timeField2);
-        datepick.setText(new StringBuilder().append(day).append("-").append(month).append("-").append(year).toString());
-    }
-
-    /**
-     *
-     * @param event
+     * @param event event
      */
     public void setCurrentEvent(Event event) {
 

@@ -1,10 +1,5 @@
 package com.example.tueapp;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.time.LocalDateTime;
-
 public class Event {
     //string to store event name
     private String eventName;
@@ -22,8 +17,6 @@ public class Event {
     private String accepted;
     //string to store the denied invites
     private String denied;
-    //boolean to send notification
-    private boolean notify;
     //int representing eventid
     private String eventID;
     // string to hold invited users.
@@ -34,7 +27,7 @@ public class Event {
     }
 
     public Event(String eventName, String location, String time, String description,
-                 String shortDescription, String email, boolean notify, String id) {
+                 String shortDescription, String email, String id) {
         this.eventName = eventName;
         this.location = location;
         this.time = time;
@@ -43,7 +36,7 @@ public class Event {
         this.email = email;
         this.accepted = "";
         this.denied = "";
-        this.notify = notify;
+        //boolean to send notification
         this.eventID = id;
     }
 
