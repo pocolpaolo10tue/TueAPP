@@ -95,11 +95,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void Register() {
-        Fragment newFragment = new RegisterFragment() ;
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        getActivity().onBackPressed();
     }
 
     private void account_info() {

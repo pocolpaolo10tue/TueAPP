@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -165,10 +164,7 @@ public class CreateEvent extends Fragment {
                       timefield2.requestFocus();
                   } else {
                       addToDatabase();
-                      FragmentTransaction replace = getParentFragmentManager().beginTransaction();
-                      replace.replace(R.id.frame_layout, new EventFragment());
-                      replace.addToBackStack(null);
-                      replace.commit();
+                      getActivity().onBackPressed();
                   }
               }
         });
@@ -187,7 +183,7 @@ public class CreateEvent extends Fragment {
         String name = eventName.getText().toString().trim();
         String desc = lDesc.getText().toString().trim();
         String sdesc = sDesc.getText().toString().trim();
-        String email = invitedList.getText().toString().trim() + " , " + mAuth.getCurrentUser().getEmail();
+        String email = invitedList.getText().toString().trim();
         String date = timefield2.getText().toString().trim();
         DatabaseReference count_ref = database.getReference("Event").child("Count");
         count_ref.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -195,7 +191,10 @@ public class CreateEvent extends Fragment {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
                     String id = String.valueOf(task.getResult().getValue(Integer.class) + 1);
-                    Event event = new Event(name, loc, date, desc, sdesc, email, id);
+                    Event event = new Event(name, loc, date, desc, sdesc, email, true, id);
+                    if (!event.getEmail().contains(mAuth.getCurrentUser().getEmail())) {
+                        event.addEmail(mAuth.getCurrentUser().getEmail());
+                    }
                     databaseRef.child(id).setValue(event);
                     count_ref.setValue(Integer.valueOf(id));
                 }
@@ -204,7 +203,26 @@ public class CreateEvent extends Fragment {
     }
 
     /**
-     * @param event event
+     *
+     * @param view view
+     * @param year year
+     * @param month month
+     * @param day day
+     */
+    public void onDateSet(@NonNull DatePicker view, int year, int month, int day) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, day);
+        String currentDate = DateFormat.getDateInstance().format(c.getTime());
+
+        EditText datepick = view.findViewById(R.id.timeField2);
+        datepick.setText(new StringBuilder().append(day).append("-").append(month).append("-").append(year).toString());
+    }
+
+    /**
+     *
+     * @param event
      */
     public void setCurrentEvent(Event event) {
 

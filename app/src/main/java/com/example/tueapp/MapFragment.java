@@ -39,7 +39,7 @@ public class MapFragment extends Fragment implements TaskLoadedCallback {
 
     //Location Permission code and checking if the permission was granted or not in the main activity
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private boolean locationPermissionGranted = MainActivity.getMyData();
+    private boolean locationPermissionGranted;
     private Polyline currentPolyline;
     GoogleMap mMap;
 
@@ -52,8 +52,9 @@ public class MapFragment extends Fragment implements TaskLoadedCallback {
 
     FusedLocationProviderClient fusedLocationProviderClient;
 
-    public MapFragment() {
-        // Required empty public constructor
+    //Getting permission
+    public MapFragment(boolean locationPermissionGranted) {
+        this.locationPermissionGranted = locationPermissionGranted;
     }
 
     @Override

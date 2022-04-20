@@ -28,7 +28,7 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
     RecyclerView recyclerViewAccepted;
     DatabaseReference database;
     AdapterRecyclerview adapterRecyclerview;
-    AdapterRecyclerViewAccepted adapterRecyclerviewAccepted;
+    AdapterRecyclerview adapterRecyclerviewAccepted;
     ArrayList<Event> list;
     ArrayList<Event> list_accepted;
     ArrayList<Event> list_denied;
@@ -83,7 +83,7 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
             public void onClick(View v) {
                 FragmentTransaction replace = getParentFragmentManager().beginTransaction();
                 replace.replace(R.id.frame_layout, new CreateEvent());
-                replace.addToBackStack(null);
+                replace.addToBackStack(EventFragment.class.getName());
                 replace.commit();
             }
         });
@@ -94,8 +94,9 @@ public class EventFragment extends Fragment implements AdapterRecyclerview.OnEve
         list_denied = new ArrayList<>();
         //create view and adapter
         adapterRecyclerview = new AdapterRecyclerview(getActivity()
-                ,list, this, this);
-        adapterRecyclerviewAccepted = new AdapterRecyclerViewAccepted(getActivity(),list_accepted);
+                ,list, this, this, false);
+        adapterRecyclerviewAccepted = new AdapterRecyclerview(getActivity(),list_accepted
+                ,this,this,true);
         recyclerView.setAdapter(adapterRecyclerview);
         recyclerViewAccepted.setAdapter(adapterRecyclerviewAccepted);
 
